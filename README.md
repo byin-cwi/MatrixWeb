@@ -1,6 +1,6 @@
-# Personal Web
+# personalWeb
 
-一个 Git 管理、GitHub Pages 可部署的个人网站模板。页面风格参考 `kexue.fm` 一类以文章为中心的技术博客：轻量、朴素、强调归档和可读性。
+My blog: 一个 Git 管理、GitHub Pages 可部署的个人网站模板。页面风格参考 `kexue.fm` 一类以文章为中心的技术博客：轻量、朴素、强调归档和可读性。
 
 ## 文件结构
 
