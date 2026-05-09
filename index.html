@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>你的名字 | 个人笔记与研究日志</title>
+    <meta
+      name="description"
+      content="一个 Git 管理、GitHub Pages 可部署的个人网站，适合写研究笔记、技术文章、项目记录与读书摘记。"
+    >
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-grid">
+        <a class="brand" href="#top" aria-label="回到首页">
+          <span class="brand-mark" aria-hidden="true">∑</span>
+          <span>
+            <strong>你的名字</strong>
+            <small>Personal Notes</small>
+          </span>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a href="#articles">文章</a>
+          <a href="#projects">项目</a>
+          <a href="#archive">归档</a>
+          <a href="#about">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top" class="wrap layout">
+      <section class="content">
+        <section class="intro" aria-labelledby="intro-title">
+          <p class="eyebrow">research log / engineering notebook</p>
+          <h1 id="intro-title">写一点可复现、可追溯、可长期维护的东西。</h1>
+          <p>
+            这里是一个偏学术博客气质的个人站模板：以文章为中心，保留分类、归档、项目记录和 Git 发布流程。
+            你可以把它用于算法笔记、实验日志、工程复盘、阅读摘记，或者任何需要持续沉淀的主题。
+          </p>
+          <div class="intro-actions">
+            <a class="button primary" href="#articles">浏览文章</a>
+            <a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </section>
+
+        <section id="articles" class="section" aria-labelledby="articles-title">
+          <div class="section-head">
+            <h2 id="articles-title">近期文章</h2>
+            <a href="#archive">全部归档</a>
+          </div>
+
+          <article class="post">
+            <div class="post-date">
+              <span>2026</span>
+              <strong>05-09</strong>
+            </div>
+            <div class="post-body">
+              <h3><a href="#">从 Git 到个人知识库：一个轻量网站工作流</a></h3>
+              <p>
+                用 Git 管理公开笔记的好处不只是版本控制，还包括清晰的变更历史、可审阅的草稿、稳定的发布入口，
+                以及未来迁移到任意静态站框架的自由度。
+              </p>
+              <div class="meta">
+                <span>Git</span>
+                <span>Personal Web</span>
+                <span>6 min read</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post">
+            <div class="post-date">
+              <span>2026</span>
+              <strong>04-21</strong>
+            </div>
+            <div class="post-body">
+              <h3><a href="#">一次实验记录应该包含什么</a></h3>
+              <p>
+                实验日志最好把假设、数据、命令、指标、异常和下一步写在同一个版本里。日后回看时，
+                你需要的是可还原的证据链，而不是只剩一个漂亮结论。
+              </p>
+              <div class="meta">
+                <span>Research</span>
+                <span>Reproducibility</span>
+                <span>8 min read</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="post">
+            <div class="post-date">
+              <span>2026</span>
+              <strong>03-12</strong>
+            </div>
+            <div class="post-body">
+              <h3><a href="#">一个公式、一段代码和一张图</a></h3>
+              <p>
+                技术文章常常同时需要推导、实现和直觉解释。页面排版应该服务于阅读节奏：
+                正文宽度适中，代码清楚，侧栏只放真正有用的导航。
+              </p>
+              <pre><code>loss = cross_entropy(logits, labels) + alpha * regularizer(theta)</code></pre>
+              <div class="meta">
+                <span>Math</span>
+                <span>Code</span>
+                <span>5 min read</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="projects" class="section" aria-labelledby="projects-title">
+          <div class="section-head">
+            <h2 id="projects-title">项目</h2>
+            <a href="https://github.com/" target="_blank" rel="noreferrer">更多代码</a>
+          </div>
+          <div class="project-list">
+            <article class="project">
+              <h3>Personal Web</h3>
+              <p>这个仓库本身：无构建步骤、可直接托管、适合后续逐步升级成 Jekyll、Hugo 或 Astro。</p>
+              <span>HTML / CSS / GitHub Pages</span>
+            </article>
+            <article class="project">
+              <h3>Research Notes</h3>
+              <p>面向长期写作的笔记系统，按主题与时间组织，可从 README、issue 或文章正文继续扩展。</p>
+              <span>Writing / Archive / Review</span>
+            </article>
+          </div>
+        </section>
+
+        <section id="archive" class="section" aria-labelledby="archive-title">
+          <h2 id="archive-title">归档</h2>
+          <ol class="archive">
+            <li><time datetime="2026-05-09">2026-05-09</time><a href="#">从 Git 到个人知识库：一个轻量网站工作流</a></li>
+            <li><time datetime="2026-04-21">2026-04-21</time><a href="#">一次实验记录应该包含什么</a></li>
+            <li><time datetime="2026-03-12">2026-03-12</time><a href="#">一个公式、一段代码和一张图</a></li>
+            <li><time datetime="2026-02-03">2026-02-03</time><a href="#">阅读论文时如何留下可检索的痕迹</a></li>
+          </ol>
+        </section>
+
+        <section id="about" class="section about" aria-labelledby="about-title">
+          <h2 id="about-title">关于</h2>
+          <p>
+            在这里替换成你的简介：研究方向、工程经验、目前关注的问题、联系方式，以及你希望读者如何引用或联系你。
+          </p>
+          <dl>
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:you@example.com">you@example.com</a></dd>
+            </div>
+            <div>
+              <dt>GitHub</dt>
+              <dd><a href="https://github.com/" target="_blank" rel="noreferrer">@yourname</a></dd>
+            </div>
+            <div>
+              <dt>RSS</dt>
+              <dd><a href="#">/feed.xml</a></dd>
+            </div>
+          </dl>
+        </section>
+      </section>
+
+      <aside class="sidebar" aria-label="站点侧栏">
+        <section class="profile">
+          <div class="avatar" aria-hidden="true">
+            <img src="assets/notebook.svg" alt="">
+          </div>
+          <h2>你的名字</h2>
+          <p>研究、工程、写作。把零散想法整理成可以复查的公开记录。</p>
+        </section>
+
+        <section class="side-block">
+          <h2>分类</h2>
+          <ul class="tag-list">
+            <li><a href="#">机器学习 <span>12</span></a></li>
+            <li><a href="#">工程实践 <span>9</span></a></li>
+            <li><a href="#">数学笔记 <span>7</span></a></li>
+            <li><a href="#">读书摘记 <span>5</span></a></li>
+          </ul>
+        </section>
+
+        <section class="side-block">
+          <h2>检索</h2>
+          <form class="search" role="search">
+            <label class="sr-only" for="query">搜索文章</label>
+            <input id="query" type="search" placeholder="关键词">
+            <button type="submit">搜索</button>
+          </form>
+        </section>
+
+        <section class="side-block">
+          <h2>链接</h2>
+          <ul class="links">
+            <li><a href="https://kexue.fm/" target="_blank" rel="noreferrer">科学空间</a></li>
+            <li><a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a></li>
+            <li><a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a></li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© 2026 你的名字. Built with plain HTML, CSS and Git.</p>
+      </div>
+    </footer>
+
+    <script src="assets/main.js"></script>
+  </body>
+</html>
