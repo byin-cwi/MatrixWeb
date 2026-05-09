@@ -4,10 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MATRIX93 | 个人笔记与研究日志</title>
-    <meta
-      name="description"
-      content="一个 Git 管理、GitHub Pages 可部署的个人网站，适合写研究笔记、技术文章、项目记录与读书摘记。"
-    >
+    <meta name="description" content="一个 Git 管理、GitHub Pages 可部署的个人网站，适合写研究笔记、技术文章、项目记录与读书摘记。">
     <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body>
@@ -17,33 +14,20 @@
           <span class="brand-mark" aria-hidden="true">∑</span>
           <span>
             <strong>MATRIX93</strong>
-            <small>Personal Notes</small>
+            <small>分享一些浅见，欢迎大家交流</small>
           </span>
         </a>
         <nav class="nav" aria-label="主导航">
-          <a href="#articles">道法</a>
-          <a href="#projects">想法</a>
-          <a href="#archive">做法</a>
-          <a href="#about">关于“我”</a>
+          <a href="index.html#articles"><span class="nav-cn">道法</span><br><span class="nav-en">Dao</span></a>
+          <a href="index.html#projects"><span class="nav-cn">想法</span><br><span class="nav-en">IDEA</span></a>
+          <a href="index.html#archive"><span class="nav-cn">做法</span><br><span class="nav-en">METHOD</span></a>
+          <a href="index.html#about"><span class="nav-cn">关于“我”</span><br><span class="nav-en">ME</span></a>
         </nav>
       </div>
     </header>
 
     <main id="top" class="wrap layout">
       <section class="content">
-        <section class="intro" aria-labelledby="intro-title">
-          <p class="eyebrow">research log / engineering notebook</p>
-          <h1 id="intro-title">写一点可复现、可追溯、可长期维护的东西。</h1>
-          <p>
-            这里是一个偏学术博客气质的个人站模板：以文章为中心，保留分类、归档、项目记录和 Git 发布流程。
-            你可以把它用于算法笔记、实验日志、工程复盘、阅读摘记，或者任何需要持续沉淀的主题。
-          </p>
-          <div class="intro-actions">
-            <a class="button primary" href="#articles">浏览文章</a>
-            <a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          </div>
-        </section>
-
         <section id="articles" class="section" aria-labelledby="articles-title">
           <div class="section-head">
             <h2 id="articles-title">近期文章</h2>
@@ -56,11 +40,8 @@
               <strong>05-09</strong>
             </div>
             <div class="post-body">
-              <h3><a href="#">从 Git 到个人知识库：一个轻量网站工作流</a></h3>
-              <p>
-                用 Git 管理公开笔记的好处不只是版本控制，还包括清晰的变更历史、可审阅的草稿、稳定的发布入口，
-                以及未来迁移到任意静态站框架的自由度。
-              </p>
+              <h3><a href="posts/git-personal-knowledge.html">从 Git 到个人知识库：一个轻量网站工作流</a></h3>
+              <p>用 Git 管理公开笔记的好处不只是版本控制，还包括清晰的变更历史、可审阅的草稿、稳定的发布入口，以及未来迁移到任意静态站框架的自由度。</p>
               <div class="meta">
                 <span>Git</span>
                 <span>Personal Web</span>
@@ -75,11 +56,8 @@
               <strong>04-21</strong>
             </div>
             <div class="post-body">
-              <h3><a href="#">一次实验记录应该包含什么</a></h3>
-              <p>
-                实验日志最好把假设、数据、命令、指标、异常和下一步写在同一个版本里。日后回看时，
-                你需要的是可还原的证据链，而不是只剩一个漂亮结论。
-              </p>
+              <h3><a href="posts/experiment-log.html">一次实验记录应该包含什么</a></h3>
+              <p>实验日志最好把假设、数据、命令、指标、异常和下一步写在同一个版本里。日后回看时，你需要的是可还原的证据链，而不是只剩一个漂亮结论。</p>
               <div class="meta">
                 <span>Research</span>
                 <span>Reproducibility</span>
@@ -94,12 +72,8 @@
               <strong>03-12</strong>
             </div>
             <div class="post-body">
-              <h3><a href="#">一个公式、一段代码和一张图</a></h3>
-              <p>
-                技术文章常常同时需要推导、实现和直觉解释。页面排版应该服务于阅读节奏：
-                正文宽度适中，代码清楚，侧栏只放真正有用的导航。
-              </p>
-              <pre><code>loss = cross_entropy(logits, labels) + alpha * regularizer(theta)</code></pre>
+              <h3><a href="posts/formula-code-figure.html">一个公式、一段代码和一张图</a></h3>
+              <p>技术文章常常同时需要推导、实现和直觉解释。页面排版应该服务于阅读节奏：正文宽度适中，代码清楚，侧栏只放真正有用的导航。</p>
               <div class="meta">
                 <span>Math</span>
                 <span>Code</span>
@@ -116,13 +90,13 @@
           </div>
           <div class="project-list">
             <article class="project">
-              <h3>Personal Web</h3>
-              <p>这个仓库本身：无构建步骤、可直接托管、适合后续逐步升级成 Jekyll、Hugo 或 Astro。</p>
-              <span>HTML / CSS / GitHub Pages</span>
+              <h3>MatrixWeb</h3>
+              <p>这个仓库本身：Markdown 写作、无依赖构建、适合托管到 GitHub Pages。</p>
+              <span>Markdown / HTML / CSS / GitHub Pages</span>
             </article>
             <article class="project">
               <h3>Research Notes</h3>
-              <p>面向长期写作的笔记系统，按主题与时间组织，可从 README、issue 或文章正文继续扩展。</p>
+              <p>面向长期写作的笔记系统，按主题与时间组织，可从 Markdown 文章继续扩展。</p>
               <span>Writing / Archive / Review</span>
             </article>
           </div>
@@ -131,10 +105,9 @@
         <section id="archive" class="section" aria-labelledby="archive-title">
           <h2 id="archive-title">归档</h2>
           <ol class="archive">
-            <li><time datetime="2026-05-09">2026-05-09</time><a href="#">从 Git 到个人知识库：一个轻量网站工作流</a></li>
-            <li><time datetime="2026-04-21">2026-04-21</time><a href="#">一次实验记录应该包含什么</a></li>
-            <li><time datetime="2026-03-12">2026-03-12</time><a href="#">一个公式、一段代码和一张图</a></li>
-            <li><time datetime="2026-02-03">2026-02-03</time><a href="#">阅读论文时如何留下可检索的痕迹</a></li>
+            <li><time datetime="2026-05-09">2026-05-09</time><a href="posts/git-personal-knowledge.html">从 Git 到个人知识库：一个轻量网站工作流</a></li>
+            <li><time datetime="2026-04-21">2026-04-21</time><a href="posts/experiment-log.html">一次实验记录应该包含什么</a></li>
+            <li><time datetime="2026-03-12">2026-03-12</time><a href="posts/formula-code-figure.html">一个公式、一段代码和一张图</a></li>
           </ol>
         </section>
 
@@ -150,7 +123,7 @@
             </div>
             <div>
               <dt>GitHub</dt>
-              <dd><a href="https://github.com/" target="_blank" rel="noreferrer">@yourname</a></dd>
+              <dd><a href="https://github.com/byin-cwi" target="_blank" rel="noreferrer">@byin-cwi</a></dd>
             </div>
             <div>
               <dt>RSS</dt>
@@ -165,7 +138,7 @@
           <div class="avatar" aria-hidden="true">
             <img src="assets/notebook.svg" alt="">
           </div>
-          <h2>你的名字</h2>
+          <h2>MATRIX93</h2>
           <p>研究、工程、写作。把零散想法整理成可以复查的公开记录。</p>
         </section>
 
@@ -201,7 +174,7 @@
 
     <footer class="site-footer">
       <div class="wrap">
-        <p>© 2026 MATRIX93. Built with plain HTML, CSS and Git.</p>
+        <p>© 2026 MATRIX93. Built with Markdown, HTML, CSS and Git.</p>
       </div>
     </footer>
 
