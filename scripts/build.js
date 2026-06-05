@@ -21,6 +21,10 @@ function inlineMarkdown(value) {
   return html;
 }
 
+function imageBlock(alt, src) {
+  return `<figure class="article-figure"><img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"></figure>`;
+}
+
 function parseFrontMatter(source, fileName) {
   const match = source.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   if (!match) {
@@ -93,6 +97,14 @@ function markdownToHtml(markdown) {
     if (!line.trim()) {
       flushParagraph();
       flushList();
+      continue;
+    }
+
+    const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (image) {
+      flushParagraph();
+      flushList();
+      html.push(imageBlock(image[1], image[2]));
       continue;
     }
 

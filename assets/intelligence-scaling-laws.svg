@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 920" role="img" aria-labelledby="title desc">
+  <title id="title">From one to three scaling laws</title>
+  <desc id="desc">A blackboard-style diagram showing intelligence increasing with compute through pre-training scaling, post-training scaling, and test-time scaling.</desc>
+  <rect width="1800" height="920" fill="#020402"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M170 760 C165 650 169 530 168 420 C168 310 164 205 174 114" stroke="#f3f4ef" stroke-width="5" opacity=".9"/>
+    <path d="M168 760 C260 760 360 758 452 760 C610 764 766 756 926 760 C1112 764 1300 758 1480 760" stroke="#f3f4ef" stroke-width="5" opacity=".88"/>
+    <path d="M170 760 C282 705 378 668 510 620 C635 575 725 505 818 420 C913 332 1004 244 1114 185" stroke="#6fb329" stroke-width="5"/>
+    <path d="M170 760 C290 704 394 661 510 620 C640 574 748 521 860 476" stroke="#76bd2e" stroke-width="5"/>
+    <path d="M170 760 C330 681 486 608 635 538 C746 486 842 442 945 402" stroke="#4f861f" stroke-width="4" opacity=".35" stroke-dasharray="13 14"/>
+    <path d="M520 616 L480 598 L493 638 Z" fill="#82c935" stroke="#82c935" stroke-width="2"/>
+    <path d="M858 476 L815 458 L830 500 Z" fill="#82c935" stroke="#82c935" stroke-width="2"/>
+    <path d="M1114 185 L1068 168 L1083 214 Z" fill="#82c935" stroke="#82c935" stroke-width="2"/>
+    <path d="M945 402 L904 388 L916 429 Z" fill="#4f861f" stroke="#4f861f" stroke-width="2" opacity=".6"/>
+    <path d="M720 520 C750 490 762 466 776 430" stroke="#76bd2e" stroke-width="3"/>
+  </g>
+  <g font-family="Chalkboard, 'Comic Sans MS', 'Segoe Print', sans-serif" font-weight="500" letter-spacing="1.5">
+    <text x="302" y="164" fill="#f4f4f1" font-size="44">FROM ONE TO THREE</text>
+    <text x="356" y="214" fill="#f4f4f1" font-size="44">SCALING LAWS</text>
+    <text x="72" y="420" fill="#f4f4f1" font-size="31">“INTELLIGENCE”</text>
+    <text x="738" y="818" fill="#f4f4f1" font-size="32">COMPUTE</text>
+    <text x="540" y="632" fill="#78bb2d" font-size="36">PRE-TRAINING SCALING</text>
+    <text x="808" y="408" fill="#78bb2d" font-size="38">POST-TRAINING SCALING</text>
+    <text x="1060" y="236" fill="#78bb2d" font-size="37">TEST-TIME SCALING</text>
+    <text x="1080" y="282" fill="#78bb2d" font-size="35">“LONG THINKING”</text>
+  </g>
+</svg>

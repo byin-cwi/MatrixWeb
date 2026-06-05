@@ -447,6 +447,16 @@ li + li {
   margin-top: 22px;
 }
 
+.article-figure {
+  margin: 10px 0 28px;
+}
+
+.article-figure img {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #020402;
+}
+
 .article-content code {
   border: 1px solid var(--line);
   border-radius: 2px;
