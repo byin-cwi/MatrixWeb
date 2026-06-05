@@ -380,8 +380,38 @@ li + li {
   border-top: 1px solid var(--line);
 }
 
-.blog-title {
+.post-number {
+  width: fit-content;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: var(--soft);
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+}
+
+.post-number-page {
   margin-bottom: 10px;
+}
+
+.blog-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.blog-title-row .post-number {
+  flex: 0 0 auto;
+  transform: translateY(-0.08em);
+}
+
+.blog-title {
+  margin: 0;
   font-size: clamp(1.22rem, 3vw, 1.45rem);
   line-height: 1.28;
 }
@@ -428,7 +458,8 @@ li + li {
 }
 
 .article-layout {
-  grid-template-columns: 370px minmax(0, 980px);
+  display: block;
+  max-width: 980px;
 }
 
 .article {
@@ -448,13 +479,30 @@ li + li {
 }
 
 .article-figure {
-  margin: 10px 0 28px;
+  margin: 18px 0 34px;
+}
+
+.article-figure-wide {
+  width: 100%;
+  max-width: 980px;
 }
 
 .article-figure img {
   width: 100%;
+  height: auto;
+  object-fit: contain;
   border: 1px solid var(--line);
   background: #020402;
+}
+
+.article-figure-light img {
+  background: #fff;
+}
+
+.article-content hr {
+  margin: 34px 0 24px;
+  border: 0;
+  border-top: 1px solid var(--line);
 }
 
 .article-content code {
@@ -511,10 +559,21 @@ pre {
   white-space: nowrap;
 }
 
+@media (max-width: 1120px) {
+  .article-layout {
+    display: block;
+  }
+
+  .article-layout .sidebar {
+    position: static;
+    max-width: 320px;
+    margin-bottom: 34px;
+  }
+}
+
 @media (max-width: 860px) {
   .header-grid,
-  .layout,
-  .article-layout {
+  .layout {
     display: block;
   }
 
@@ -537,6 +596,11 @@ pre {
     width: 220px;
     height: auto;
   }
+
+  .blog-title-row {
+    align-items: flex-start;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -547,6 +611,15 @@ pre {
   .layout,
   .article-layout {
     padding-block: 24px 44px;
+  }
+
+  .blog-title-row {
+    display: block;
+  }
+
+  .blog-title-row .post-number {
+    margin-bottom: 8px;
+    transform: none;
   }
 
 }

@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="900" viewBox="0 0 2200 900" role="img" aria-labelledby="title desc">
+  <title id="title">External time and internal time in neural networks</title>
+  <desc id="desc">A dark timeline diagram contrasting dense external time ticks with sparse internal updates and changing neural subnetworks.</desc>
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="65%">
+      <stop offset="0" stop-color="#07161a"/>
+      <stop offset="0.52" stop-color="#050708"/>
+      <stop offset="1" stop-color="#000000"/>
+    </radialGradient>
+    <linearGradient id="timeLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#57d9e7" stop-opacity=".75"/>
+      <stop offset=".5" stop-color="#9cf6ff"/>
+      <stop offset="1" stop-color="#57d9e7" stop-opacity=".75"/>
+    </linearGradient>
+    <linearGradient id="pulseLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#78d6ff"/>
+      <stop offset=".5" stop-color="#34ffe2"/>
+      <stop offset="1" stop-color="#69c7ff"/>
+    </linearGradient>
+    <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.14 0 0 0 0 0.95 0 0 0 0 0.95 0 0 0 .75 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .label{font:500 38px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#5ad5e2}
+      .muted{fill:#5c6266;opacity:.72}
+      .tick{stroke:#5cdce8;stroke-width:3;opacity:.8}
+      .minor{stroke:#5cdce8;stroke-width:2;opacity:.55}
+      .netLine{stroke:#6f828a;stroke-width:2;opacity:.55}
+      .activeLine{stroke:#7bdfff;stroke-width:3;opacity:.9;filter:url(#glow)}
+      .node{fill:#59666d;opacity:.72}
+      .activeNode{fill:#4ff4ef;filter:url(#glow)}
+    </style>
+  </defs>
+
+  <rect width="2200" height="900" fill="url(#bgGlow)"/>
+  <rect width="2200" height="900" fill="#000" opacity=".32"/>
+
+  <text class="label" x="72" y="205">External Time</text>
+  <line x1="300" y1="190" x2="2130" y2="190" stroke="url(#timeLine)" stroke-width="5" filter="url(#glow)"/>
+  <g>
+    <line class="tick" x1="325" y1="164" x2="325" y2="220"/>
+    <line class="minor" x1="343" y1="168" x2="343" y2="214"/>
+    <line class="minor" x1="361" y1="168" x2="361" y2="214"/>
+    <line class="minor" x1="379" y1="168" x2="379" y2="214"/>
+    <line class="minor" x1="397" y1="168" x2="397" y2="214"/>
+    <line class="minor" x1="415" y1="168" x2="415" y2="214"/>
+    <line class="tick" x1="433" y1="158" x2="433" y2="224"/>
+    <line class="minor" x1="451" y1="168" x2="451" y2="214"/>
+    <line class="minor" x1="469" y1="168" x2="469" y2="214"/>
+    <line class="minor" x1="487" y1="168" x2="487" y2="214"/>
+    <line class="minor" x1="505" y1="168" x2="505" y2="214"/>
+    <line class="minor" x1="523" y1="168" x2="523" y2="214"/>
+    <line class="tick" x1="541" y1="164" x2="541" y2="220"/>
+    <line class="minor" x1="559" y1="168" x2="559" y2="214"/>
+    <line class="minor" x1="577" y1="168" x2="577" y2="214"/>
+    <line class="minor" x1="595" y1="168" x2="595" y2="214"/>
+    <line class="minor" x1="613" y1="168" x2="613" y2="214"/>
+    <line class="minor" x1="631" y1="168" x2="631" y2="214"/>
+    <line class="tick" x1="649" y1="158" x2="649" y2="224"/>
+    <line class="minor" x1="667" y1="168" x2="667" y2="214"/>
+    <line class="minor" x1="685" y1="168" x2="685" y2="214"/>
+    <line class="minor" x1="703" y1="168" x2="703" y2="214"/>
+    <line class="minor" x1="721" y1="168" x2="721" y2="214"/>
+    <line class="minor" x1="739" y1="168" x2="739" y2="214"/>
+    <line class="tick" x1="757" y1="164" x2="757" y2="220"/>
+    <line class="minor" x1="775" y1="168" x2="775" y2="214"/>
+    <line class="minor" x1="793" y1="168" x2="793" y2="214"/>
+    <line class="minor" x1="811" y1="168" x2="811" y2="214"/>
+    <line class="minor" x1="829" y1="168" x2="829" y2="214"/>
+    <line class="minor" x1="847" y1="168" x2="847" y2="214"/>
+    <line class="tick" x1="865" y1="158" x2="865" y2="224"/>
+    <line class="minor" x1="883" y1="168" x2="883" y2="214"/>
+    <line class="minor" x1="901" y1="168" x2="901" y2="214"/>
+    <line class="minor" x1="919" y1="168" x2="919" y2="214"/>
+    <line class="minor" x1="937" y1="168" x2="937" y2="214"/>
+    <line class="minor" x1="955" y1="168" x2="955" y2="214"/>
+    <line class="tick" x1="973" y1="164" x2="973" y2="220"/>
+    <line class="minor" x1="991" y1="168" x2="991" y2="214"/>
+    <line class="minor" x1="1009" y1="168" x2="1009" y2="214"/>
+    <line class="minor" x1="1027" y1="168" x2="1027" y2="214"/>
+    <line class="minor" x1="1045" y1="168" x2="1045" y2="214"/>
+    <line class="minor" x1="1063" y1="168" x2="1063" y2="214"/>
+    <line class="tick" x1="1081" y1="158" x2="1081" y2="224"/>
+    <line class="minor" x1="1099" y1="168" x2="1099" y2="214"/>
+    <line class="minor" x1="1117" y1="168" x2="1117" y2="214"/>
+    <line class="minor" x1="1135" y1="168" x2="1135" y2="214"/>
+    <line class="minor" x1="1153" y1="168" x2="1153" y2="214"/>
+    <line class="minor" x1="1171" y1="168" x2="1171" y2="214"/>
+    <line class="tick" x1="1189" y1="164" x2="1189" y2="220"/>
+    <line class="minor" x1="1207" y1="168" x2="1207" y2="214"/>
+    <line class="minor" x1="1225" y1="168" x2="1225" y2="214"/>
+    <line class="minor" x1="1243" y1="168" x2="1243" y2="214"/>
+    <line class="minor" x1="1261" y1="168" x2="1261" y2="214"/>
+    <line class="minor" x1="1279" y1="168" x2="1279" y2="214"/>
+    <line class="tick" x1="1297" y1="158" x2="1297" y2="224"/>
+    <line class="minor" x1="1315" y1="168" x2="1315" y2="214"/>
+    <line class="minor" x1="1333" y1="168" x2="1333" y2="214"/>
+    <line class="minor" x1="1351" y1="168" x2="1351" y2="214"/>
+    <line class="minor" x1="1369" y1="168" x2="1369" y2="214"/>
+    <line class="minor" x1="1387" y1="168" x2="1387" y2="214"/>
+    <line class="tick" x1="1405" y1="164" x2="1405" y2="220"/>
+    <line class="minor" x1="1423" y1="168" x2="1423" y2="214"/>
+    <line class="minor" x1="1441" y1="168" x2="1441" y2="214"/>
+    <line class="minor" x1="1459" y1="168" x2="1459" y2="214"/>
+    <line class="minor" x1="1477" y1="168" x2="1477" y2="214"/>
+    <line class="minor" x1="1495" y1="168" x2="1495" y2="214"/>
+    <line class="tick" x1="1513" y1="158" x2="1513" y2="224"/>
+    <line class="minor" x1="1531" y1="168" x2="1531" y2="214"/>
+    <line class="minor" x1="1549" y1="168" x2="1549" y2="214"/>
+    <line class="minor" x1="1567" y1="168" x2="1567" y2="214"/>
+    <line class="minor" x1="1585" y1="168" x2="1585" y2="214"/>
+    <line class="minor" x1="1603" y1="168" x2="1603" y2="214"/>
+    <line class="tick" x1="1621" y1="164" x2="1621" y2="220"/>
+    <line class="minor" x1="1639" y1="168" x2="1639" y2="214"/>
+    <line class="minor" x1="1657" y1="168" x2="1657" y2="214"/>
+    <line class="minor" x1="1675" y1="168" x2="1675" y2="214"/>
+    <line class="minor" x1="1693" y1="168" x2="1693" y2="214"/>
+    <line class="minor" x1="1711" y1="168" x2="1711" y2="214"/>
+    <line class="tick" x1="1729" y1="158" x2="1729" y2="224"/>
+    <line class="minor" x1="1747" y1="168" x2="1747" y2="214"/>
+    <line class="minor" x1="1765" y1="168" x2="1765" y2="214"/>
+    <line class="minor" x1="1783" y1="168" x2="1783" y2="214"/>
+    <line class="minor" x1="1801" y1="168" x2="1801" y2="214"/>
+    <line class="minor" x1="1819" y1="168" x2="1819" y2="214"/>
+    <line class="tick" x1="1837" y1="164" x2="1837" y2="220"/>
+    <line class="minor" x1="1855" y1="168" x2="1855" y2="214"/>
+    <line class="minor" x1="1873" y1="168" x2="1873" y2="214"/>
+    <line class="minor" x1="1891" y1="168" x2="1891" y2="214"/>
+    <line class="minor" x1="1909" y1="168" x2="1909" y2="214"/>
+    <line class="minor" x1="1927" y1="168" x2="1927" y2="214"/>
+    <line class="tick" x1="1945" y1="158" x2="1945" y2="224"/>
+    <line class="minor" x1="1963" y1="168" x2="1963" y2="214"/>
+    <line class="minor" x1="1981" y1="168" x2="1981" y2="214"/>
+    <line class="minor" x1="1999" y1="168" x2="1999" y2="214"/>
+    <line class="minor" x1="2017" y1="168" x2="2017" y2="214"/>
+    <line class="minor" x1="2035" y1="168" x2="2035" y2="214"/>
+    <line class="tick" x1="2053" y1="164" x2="2053" y2="220"/>
+  </g>
+
+  <text class="label muted" x="82" y="425">Internal Time</text>
+  <line x1="300" y1="414" x2="2130" y2="414" stroke="#7f8a8f" stroke-width="5" opacity=".45"/>
+  <path d="M500 414 C620 340 760 350 900 414 S1195 486 1335 414 S1625 345 1750 414"
+        stroke="url(#pulseLine)" stroke-width="4" fill="none" filter="url(#glow)" opacity=".9"/>
+  <path d="M500 414 C635 400 706 334 835 391 M955 414 C1030 340 1114 362 1195 395 M1395 414 C1494 365 1577 330 1690 386"
+        stroke="#78d6ff" stroke-width="2" fill="none" opacity=".7"/>
+  <g filter="url(#softGlow)">
+    <circle cx="500" cy="414" r="16" fill="#69d7ff"/>
+    <circle cx="900" cy="414" r="18" fill="#3ff5df"/>
+    <circle cx="1295" cy="414" r="18" fill="#3ff5df"/>
+    <circle cx="1770" cy="414" r="17" fill="#69d7ff"/>
+  </g>
+
+  <g transform="translate(390 500)">
+    <line class="netLine" x1="42" y1="45" x2="100" y2="82"/><line class="netLine" x1="42" y1="45" x2="112" y2="142"/><line class="netLine" x1="42" y1="45" x2="168" y2="92"/>
+    <line class="netLine" x1="42" y1="118" x2="100" y2="82"/><line class="netLine" x1="42" y1="118" x2="112" y2="142"/><line class="netLine" x1="42" y1="118" x2="168" y2="178"/>
+    <line class="netLine" x1="42" y1="190" x2="112" y2="142"/><line class="netLine" x1="42" y1="190" x2="168" y2="178"/>
+    <line class="netLine" x1="100" y1="82" x2="214" y2="52"/><line class="netLine" x1="112" y1="142" x2="214" y2="122"/><line class="netLine" x1="168" y1="178" x2="214" y2="190"/>
+    <path class="activeLine" d="M42 118 L100 82 L168 92 L214 122 M42 190 L112 142 L168 178 L214 190 M100 82 L112 142"/>
+    <circle class="node" cx="42" cy="45" r="8"/><circle class="activeNode" cx="42" cy="118" r="8"/><circle class="activeNode" cx="42" cy="190" r="8"/>
+    <circle class="activeNode" cx="100" cy="82" r="8"/><circle class="activeNode" cx="112" cy="142" r="8"/><circle class="node" cx="124" cy="210" r="8"/>
+    <circle class="activeNode" cx="168" cy="92" r="8"/><circle class="activeNode" cx="168" cy="178" r="8"/><circle class="node" cx="214" cy="52" r="8"/><circle class="activeNode" cx="214" cy="122" r="8"/><circle class="activeNode" cx="214" cy="190" r="8"/>
+  </g>
+  <g transform="translate(810 500)">
+    <line class="netLine" x1="42" y1="45" x2="100" y2="82"/><line class="netLine" x1="42" y1="118" x2="112" y2="142"/><line class="netLine" x1="42" y1="190" x2="168" y2="178"/>
+    <line class="netLine" x1="100" y1="82" x2="214" y2="52"/><line class="netLine" x1="112" y1="142" x2="214" y2="122"/><line class="netLine" x1="168" y1="178" x2="214" y2="190"/><line class="netLine" x1="100" y1="82" x2="168" y2="178"/>
+    <path class="activeLine" d="M42 45 L100 82 L112 142 L214 122 M112 142 L168 178"/>
+    <circle class="activeNode" cx="42" cy="45" r="8"/><circle class="node" cx="42" cy="118" r="8"/><circle class="node" cx="42" cy="190" r="8"/>
+    <circle class="activeNode" cx="100" cy="82" r="8"/><circle class="activeNode" cx="112" cy="142" r="8"/><circle class="activeNode" cx="168" cy="178" r="8"/><circle class="node" cx="214" cy="52" r="8"/><circle class="activeNode" cx="214" cy="122" r="8"/><circle class="node" cx="214" cy="190" r="8"/>
+  </g>
+  <g transform="translate(1230 500)">
+    <line class="netLine" x1="42" y1="45" x2="100" y2="82"/><line class="netLine" x1="42" y1="118" x2="112" y2="142"/><line class="netLine" x1="42" y1="190" x2="168" y2="178"/>
+    <line class="netLine" x1="100" y1="82" x2="214" y2="52"/><line class="netLine" x1="112" y1="142" x2="214" y2="122"/><line class="netLine" x1="168" y1="178" x2="214" y2="190"/><line class="netLine" x1="42" y1="45" x2="168" y2="92"/><line class="netLine" x1="112" y1="142" x2="168" y2="92"/>
+    <path class="activeLine" d="M42 118 L112 142 L168 92 L214 52 M112 142 L168 178 L214 190"/>
+    <circle class="node" cx="42" cy="45" r="8"/><circle class="activeNode" cx="42" cy="118" r="8"/><circle class="node" cx="42" cy="190" r="8"/>
+    <circle class="node" cx="100" cy="82" r="8"/><circle class="activeNode" cx="112" cy="142" r="8"/><circle class="activeNode" cx="168" cy="92" r="8"/><circle class="activeNode" cx="168" cy="178" r="8"/><circle class="activeNode" cx="214" cy="52" r="8"/><circle class="node" cx="214" cy="122" r="8"/><circle class="activeNode" cx="214" cy="190" r="8"/>
+  </g>
+  <g transform="translate(1695 500)">
+    <line class="netLine" x1="42" y1="45" x2="100" y2="82"/><line class="netLine" x1="42" y1="118" x2="112" y2="142"/><line class="netLine" x1="42" y1="190" x2="168" y2="178"/>
+    <line class="netLine" x1="100" y1="82" x2="214" y2="52"/><line class="netLine" x1="112" y1="142" x2="214" y2="122"/><line class="netLine" x1="168" y1="178" x2="214" y2="190"/><line class="netLine" x1="42" y1="190" x2="100" y2="82"/><line class="netLine" x1="100" y1="82" x2="168" y2="92"/>
+    <path class="activeLine" d="M42 190 L100 82 L168 92 L214 122 M100 82 L112 142 L168 178"/>
+    <circle class="node" cx="42" cy="45" r="8"/><circle class="node" cx="42" cy="118" r="8"/><circle class="activeNode" cx="42" cy="190" r="8"/>
+    <circle class="activeNode" cx="100" cy="82" r="8"/><circle class="activeNode" cx="112" cy="142" r="8"/><circle class="activeNode" cx="168" cy="92" r="8"/><circle class="activeNode" cx="168" cy="178" r="8"/><circle class="node" cx="214" cy="52" r="8"/><circle class="activeNode" cx="214" cy="122" r="8"/><circle class="node" cx="214" cy="190" r="8"/>
+  </g>
+</svg>

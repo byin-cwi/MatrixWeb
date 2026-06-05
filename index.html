@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bojian Yin | About Me</title>
     <meta name="description" content="Bojian Yin 的学术个人主页、研究笔记和博客归档。">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles.css?v=inline-post-numbers">
   </head>
   <body>
     <header class="site-header">
@@ -13,7 +13,8 @@
         <a class="brand" href="index.html" aria-label="回到首页">Bojian Yin</a>
         <nav class="nav" aria-label="主导航">
           <a href="index.html#publications">Publications</a>
-          <a href="index.html#blogs">Blogs</a>
+          <a href="index.html#blogs">Blog</a>
+          <a href="index.html#ideas">想法</a>
           <a href="index.html#miscs">Miscs</a>
           <a href="index.html#cv">CV</a>
           <button class="theme-toggle" type="button" aria-label="Theme settings">⚙</button>
@@ -41,7 +42,7 @@
         <section id="about" class="section" aria-labelledby="about-title">
           <h1 id="about-title">About Me</h1>
           <p>
-            I am Bojian Yin, an Associate Researcher at the Institute of Automation, Chinese Academy of Sciences.
+            I am Bojian Yin, a Professor at the Institute of Automation, Chinese Academy of Sciences.
             My research lies at the intersection of deep learning, brain-inspired intelligence, and foundational AI.
             I study the mathematical mechanisms that make intelligent learning efficient, adaptive, and robust.
           </p>
@@ -100,11 +101,45 @@
         </section>
 
         <section id="blogs" class="section blog-posts" aria-labelledby="blogs-title">
-          <h2 id="blogs-title" class="blog-posts-title">Blog posts</h2>
+          <h2 id="blogs-title" class="blog-posts-title">Blog</h2>
             <section class="blog-year-group" aria-labelledby="blogs-2026">
               <h3 id="blogs-2026" class="blog-year">2026</h3>
               <article class="blog-entry">
-                <h3 class="blog-title"><a href="posts/entropy-and-structure.html">《AI 还在等待祂的智能方程》</a></h3>
+                <div class="blog-title-row">
+                  <div class="post-number" aria-label="Blog number 2">Blog 02</div>
+                  <h3 class="blog-title"><a href="posts/two-times-in-networks.html">Two Kinds of Time in Neural Networks</a></h3>
+                </div>
+                <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="2026-06-05">June 05, 2026</time></p>
+                <p class="blog-summary">A reflection on external time, internal time, and how Selective Update lets neural networks decouple sequence length from meaningful state changes.</p>
+              </article>
+              <article class="blog-entry">
+                <div class="blog-title-row">
+                  <div class="post-number" aria-label="Blog number 1">Blog 01</div>
+                  <h3 class="blog-title"><a href="posts/ai-intelligence-equation.html">AI Is Still Awaiting Its Intelligence Equation</a></h3>
+                </div>
+                <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="2026-06-05">June 05, 2026</time></p>
+                <p class="blog-summary">A reflection on scaling laws, entropy, structure, and why AI may still need a deeper intelligence equation.</p>
+              </article>
+            </section>
+        </section>
+
+        <section id="ideas" class="section blog-posts" aria-labelledby="ideas-title">
+          <h2 id="ideas-title" class="blog-posts-title">想法</h2>
+            <section class="blog-year-group" aria-labelledby="ideas-2026">
+              <h3 id="ideas-2026" class="blog-year">2026</h3>
+              <article class="blog-entry">
+                <div class="blog-title-row">
+                  <div class="post-number" aria-label="想法 number 2">想法 02</div>
+                  <h3 class="blog-title"><a href="posts/selective-update-time.html">网络中的两个时间</a></h3>
+                </div>
+                <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="2026-06-05">June 05, 2026</time></p>
+                <p class="blog-summary">从人的时间感与神经网络的时间结构出发，理解 Selective Update 如何让外部时间和内部时间脱钩。</p>
+              </article>
+              <article class="blog-entry">
+                <div class="blog-title-row">
+                  <div class="post-number" aria-label="想法 number 1">想法 01</div>
+                  <h3 class="blog-title"><a href="posts/entropy-and-structure.html">《AI 还在等待祂的智能方程》</a></h3>
+                </div>
                 <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="2026-06-05">June 05, 2026</time></p>
                 <p class="blog-summary">从负熵、scaling law 与结构出发，思考 AGI 的资源边界、学习机制和下一轮结构跃迁。</p>
               </article>

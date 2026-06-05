@@ -17,12 +17,20 @@ function inlineMarkdown(value) {
   let html = escapeHtml(value);
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
   html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
   return html;
 }
 
 function imageBlock(alt, src) {
-  return `<figure class="article-figure"><img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"></figure>`;
+  const classes = ["article-figure"];
+  if (/(network|time|equation|scaling|internal|external|unfolding)/i.test(src)) {
+    classes.push("article-figure-wide");
+  }
+  if (/unfolding/i.test(src)) {
+    classes.push("article-figure-light");
+  }
+  return `<figure class="${classes.join(" ")}"><img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"></figure>`;
 }
 
 function parseFrontMatter(source, fileName) {
@@ -48,6 +56,7 @@ function parseFrontMatter(source, fileName) {
 
   data.tags = data.tags || [];
   data.readTime = data.readTime || "1 min read";
+  data.section = data.section || "blog";
   return { data, markdown: match[2].trim() };
 }
 
@@ -97,6 +106,13 @@ function markdownToHtml(markdown) {
     if (!line.trim()) {
       flushParagraph();
       flushList();
+      continue;
+    }
+
+    if (/^-{3,}$/.test(line.trim())) {
+      flushParagraph();
+      flushList();
+      html.push("<hr>");
       continue;
     }
 
@@ -169,6 +185,10 @@ function formatPublishedDate(date) {
   return `${months[Number(month) - 1]} ${day}, ${year}`;
 }
 
+function formatPostNumber(number) {
+  return String(number).padStart(2, "0");
+}
+
 function groupPostsByYear(posts) {
   const groups = [];
   for (const post of posts) {
@@ -190,7 +210,8 @@ function siteHeader(prefix = "") {
         <a class="brand" href="${home}" aria-label="回到首页">Bojian Yin</a>
         <nav class="nav" aria-label="主导航">
           <a href="${prefix}index.html#publications">Publications</a>
-          <a href="${prefix}index.html#blogs">Blogs</a>
+          <a href="${prefix}index.html#blogs">Blog</a>
+          <a href="${prefix}index.html#ideas">想法</a>
           <a href="${prefix}index.html#miscs">Miscs</a>
           <a href="${prefix}index.html#cv">CV</a>
           <button class="theme-toggle" type="button" aria-label="Theme settings">⚙</button>
@@ -216,19 +237,29 @@ ${scriptPath ? `    <script src="${scriptPath}"></script>\n` : ""}  </body>
 `;
 }
 
+function sectionLabel(section) {
+  return section === "idea" ? "想法" : "Blog";
+}
+
 function blogEntry(post, prefix = "") {
   return `              <article class="blog-entry">
-                <h3 class="blog-title"><a href="${prefix}posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                <div class="blog-title-row">
+                  <div class="post-number" aria-label="${escapeHtml(sectionLabel(post.section))} number ${post.sectionNumber}">${escapeHtml(sectionLabel(post.section))} ${formatPostNumber(post.sectionNumber)}</div>
+                  <h3 class="blog-title"><a href="${prefix}posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                </div>
                 <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="${post.date}">${formatPublishedDate(post.date)}</time></p>
                 <p class="blog-summary">${escapeHtml(post.summary)}</p>
               </article>`;
 }
 
-function blogGroups(posts, prefix = "") {
+function blogGroups(posts, prefix = "", groupPrefix = "blogs") {
+  if (!posts.length) {
+    return `            <p class="empty-list">No posts yet.</p>`;
+  }
   return groupPostsByYear(posts)
     .map(
-      (group) => `            <section class="blog-year-group" aria-labelledby="blogs-${group.year}">
-              <h3 id="blogs-${group.year}" class="blog-year">${group.year}</h3>
+      (group) => `            <section class="blog-year-group" aria-labelledby="${groupPrefix}-${group.year}">
+              <h3 id="${groupPrefix}-${group.year}" class="blog-year">${group.year}</h3>
 ${group.posts.map((post) => blogEntry(post, prefix)).join("\n")}
             </section>`
     )
@@ -262,6 +293,9 @@ function sidebar(prefix = "") {
 }
 
 function buildIndex(posts) {
+  const displayOrder = (a, b) => b.date.localeCompare(a.date) || b.sectionNumber - a.sectionNumber;
+  const blogPosts = posts.filter((post) => post.section === "blog").sort(displayOrder);
+  const ideaPosts = posts.filter((post) => post.section === "idea").sort(displayOrder);
   const body = `${siteHeader()}
 
     <main id="top" class="wrap layout">
@@ -270,7 +304,7 @@ ${sidebar()}
         <section id="about" class="section" aria-labelledby="about-title">
           <h1 id="about-title">About Me</h1>
           <p>
-            I am Bojian Yin, an Associate Researcher at the Institute of Automation, Chinese Academy of Sciences.
+            I am Bojian Yin, a Professor at the Institute of Automation, Chinese Academy of Sciences.
             My research lies at the intersection of deep learning, brain-inspired intelligence, and foundational AI.
             I study the mathematical mechanisms that make intelligent learning efficient, adaptive, and robust.
           </p>
@@ -329,8 +363,13 @@ ${sidebar()}
         </section>
 
         <section id="blogs" class="section blog-posts" aria-labelledby="blogs-title">
-          <h2 id="blogs-title" class="blog-posts-title">Blog posts</h2>
-${blogGroups(posts)}
+          <h2 id="blogs-title" class="blog-posts-title">Blog</h2>
+${blogGroups(blogPosts, "", "blogs")}
+        </section>
+
+        <section id="ideas" class="section blog-posts" aria-labelledby="ideas-title">
+          <h2 id="ideas-title" class="blog-posts-title">想法</h2>
+${blogGroups(ideaPosts, "", "ideas")}
         </section>
 
         <section id="miscs" class="section" aria-labelledby="miscs-title">
@@ -358,23 +397,25 @@ ${blogGroups(posts)}
   return documentShell({
     title: "Bojian Yin | About Me",
     description: "Bojian Yin 的学术个人主页、研究笔记和博客归档。",
-    cssPath: "assets/styles.css",
+    cssPath: "assets/styles.css?v=inline-post-numbers",
     scriptPath: "assets/main.js?v=academic-ui",
     body,
   });
 }
 
 function buildPost(post) {
+  const returnHash = post.section === "idea" ? "ideas" : "blogs";
+  const returnLabel = post.section === "idea" ? "返回想法" : "返回 Blog";
   const body = `${siteHeader("../")}
 
     <main id="top" class="wrap layout article-layout">
-${sidebar("../")}
       <article class="article section">
+        <div class="post-number post-number-page">${escapeHtml(sectionLabel(post.section))} ${formatPostNumber(post.sectionNumber)}</div>
         <p class="article-date">${escapeHtml(post.date)}</p>
         <div class="article-content">
 ${markdownToHtml(post.markdown)}
         </div>
-        <p class="article-back"><a href="../index.html#blogs">返回 Blogs</a></p>
+        <p class="article-back"><a href="../index.html#${returnHash}">${returnLabel}</a></p>
       </article>
     </main>
 
@@ -388,7 +429,7 @@ ${markdownToHtml(post.markdown)}
   return documentShell({
     title: `${post.title} | Bojian Yin`,
     description: post.summary,
-    cssPath: "../assets/styles.css",
+    cssPath: "../assets/styles.css?v=inline-post-numbers",
     scriptPath: "../assets/main.js?v=academic-ui",
     body,
   });
@@ -397,17 +438,38 @@ ${markdownToHtml(post.markdown)}
 function readPosts() {
   return fs
     .readdirSync(contentDir)
+    .sort()
     .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => {
       const source = fs.readFileSync(path.join(contentDir, fileName), "utf8");
       const { data, markdown } = parseFrontMatter(source, fileName);
       return { ...data, markdown };
     })
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
+}
+
+function assignSectionNumbers(posts) {
+  const sections = new Map();
+  for (const post of posts) {
+    if (!sections.has(post.section)) {
+      sections.set(post.section, []);
+    }
+    sections.get(post.section).push(post);
+  }
+
+  for (const sectionPosts of sections.values()) {
+    sectionPosts
+      .slice()
+      .sort((a, b) => a.date.localeCompare(b.date) || a.slug.localeCompare(b.slug))
+      .forEach((post, index) => {
+        post.sectionNumber = index + 1;
+      });
+  }
 }
 
 function main() {
   const posts = readPosts();
+  assignSectionNumbers(posts);
   if (!fs.existsSync(postsDir)) {
     fs.mkdirSync(postsDir);
   }

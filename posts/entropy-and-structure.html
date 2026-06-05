@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>《AI 还在等待祂的智能方程》 | Bojian Yin</title>
     <meta name="description" content="从负熵、scaling law 与结构出发，思考 AGI 的资源边界、学习机制和下一轮结构跃迁。">
-    <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/styles.css?v=inline-post-numbers">
   </head>
   <body>
     <header class="site-header">
@@ -13,7 +13,8 @@
         <a class="brand" href="../index.html" aria-label="回到首页">Bojian Yin</a>
         <nav class="nav" aria-label="主导航">
           <a href="../index.html#publications">Publications</a>
-          <a href="../index.html#blogs">Blogs</a>
+          <a href="../index.html#blogs">Blog</a>
+          <a href="../index.html#ideas">想法</a>
           <a href="../index.html#miscs">Miscs</a>
           <a href="../index.html#cv">CV</a>
           <button class="theme-toggle" type="button" aria-label="Theme settings">⚙</button>
@@ -22,28 +23,15 @@
     </header>
 
     <main id="top" class="wrap layout article-layout">
-      <aside class="sidebar" aria-label="站点侧栏">
-        <section class="profile">
-          <div class="avatar" aria-hidden="true">
-            <img src="../assets/profile.jpg" alt="">
-          </div>
-          <h2>Bojian Yin</h2>
-          <ul class="profile-links">
-            <li><span class="profile-icon profile-icon-svg" aria-hidden="true"><svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.6"></circle></svg></span><span>Beijing, China</span></li>
-            <li><span class="profile-icon profile-icon-svg" aria-hidden="true"><svg viewBox="0 0 24 24" role="img" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg></span><a href="mailto:yinbojian93@gmail.com">Email</a></li>
-            <li><span class="profile-icon profile-icon-gh" aria-hidden="true">GH</span><a href="https://github.com/byin-cwi" target="_blank" rel="noreferrer">GitHub</a></li>
-            <li><span class="profile-icon profile-icon-linkedin" aria-hidden="true">in</span><a href="https://www.linkedin.com/in/bojianyin" target="_blank" rel="noreferrer">LinkedIn</a></li>
-            <li><span class="profile-icon" aria-hidden="true">CV</span><a href="../assets/cv_DM.pdf">CV</a></li>
-          </ul>
-        </section>
-      </aside>
       <article class="article section">
+        <div class="post-number post-number-page">想法 01</div>
         <p class="article-date">2026-06-05</p>
         <div class="article-content">
 <h1>《AI 还在等待祂的智能方程》</h1>
-<figure class="article-figure"><img src="../assets/intelligence-scaling-laws.svg" alt="From one to three scaling laws"></figure>
+<figure class="article-figure article-figure-wide"><img src="../assets/intelligence-equation-hero.jpg" alt="AI intelligence equation"></figure>
 <p>人以负熵为食，才能在熵增的环境里维持自身的存续。我们每天摄入的食物和能量，本质上都是带着结构的秩序输入，身体把这份秩序转化为生命活动的稳定，把不可避免的混乱排到体外，于是个体得以在更大的热力学洪流中暂时站稳脚跟。也正因为这种生存经验太深刻，当我们谈论人工智能时，我总会忍不住用同一套镜片去看它，结果越看越觉得荒诞又迷人：我们希望构造一种“智能”，让它把高熵的输入加工成低熵的信息，把噪声压成知识，把纷乱折叠成可用的结构，而代价似乎只剩下一串 token 背后的电力、算力与散热。于是整个过程在某些时刻像极了一场现代祭祀，我们献上电与硅，念出自己也未必完全懂的咒语，期待某种名为“涌现”的赐福，仿佛 AGI 不是工程问题，而是一种被召唤的神迹。</p>
-<p>今天最主流的造神路径，是所谓 scaling law。它讲述的故事相当诱人：只要模型更大、数据更多、训练更久，能力就会持续增长，并最终在某个点跨过我们称为 AGI 的门槛。这条路之所以让人安心，是因为它很像一条不挑路况的大道，只要持续投入燃料，就能稳健前进。但让人不安的同样来自它的前提，因为这套叙事往往默认了资源可以逼近“无限”，数据可以源源不断，能量可以持续供给，算力可以无止境堆叠。现实世界却偏偏由上限构成，能源的总量与可用性、芯片制造与部署的边界、数据的可得性与有效性、社会对成本和能耗的容忍度，都会在某个时刻从背景条件变成决定性约束。假如这个世界或者宇宙的能量上限，或我们能承受的能耗上限，根本不足以支撑用纯粹堆规模的方式抵达 AGI，那么再漂亮的曲线也可能只是把烟花画成火箭的形状，浪漫固然浪漫，也可能只是把烟花画成了火箭的形状。</p>
+<p>今天最主流的造神路径，是所谓 scaling law。它讲述的故事相当诱人：只要模型更大、数据更多、训练更久，能力就会持续增长，并最终在某个点跨过我们称为 AGI 的门槛。这条路之所以让人安心，是因为它很像一条不挑路况的大道，只要持续投入燃料，就能稳健前进。但让人不安的同样来自它的前提，因为这套叙事往往默认了资源可以逼近“无限”，数据可以源源不断，能量可以持续供给，算力可以无止境堆叠。现实世界却偏偏由上限构成，能源的总量与可用性、芯片制造与部署的边界、数据的可得性与有效性、社会对成本和能耗的容忍度，都会在某个时刻从背景条件变成决定性约束。假如这个世界或者宇宙的能量上限，或我们能承受的能耗上限，根本不足以支撑用纯粹堆规模的方式抵达 AGI，那么再漂亮的曲线也可能只是把烟花画成火箭的形状。</p>
+<figure class="article-figure article-figure-wide"><img src="../assets/intelligence-scaling-laws.svg" alt="From one to three scaling laws"></figure>
 <p>从训练的角度看，所谓学习可以被理解为一种熵的搬运。数据中蕴含着世界的统计规律与结构信息，训练让网络参数把这些规律吸收进去，形成一种可复用的内部表征。数据越多样，网络越庞大，可容纳的结构就越丰富，这也是 scaling 能反复奏效的原因。可奏效并不等于高效。真正的瓶颈不只是引力，还有氧气，换句话说，不只是算力和训练时长，还有数据质量、数据覆盖、分布偏移、任务组合的复杂性，以及模型在推理阶段对计算的消耗方式。规模可以把能力往上推，但当边际收益开始变薄时，我们终究会面对一个问题：有没有更聪明的路径，能让同等投入产生更大的结构增益。</p>
 <p>我认为答案仍然是结构。规模解决的是剂量，结构解决的是反应机制。剂量可以让模型更强，但机制决定模型强在哪里，以及强得是否优雅。借用炸药的类比会更直观：黑火药时代，人类用未经提炼的自然物质获得一次短促而粗糙的爆发；进入化学炸药时代，人类理解了更细的反应路径，通过提纯与合成设计出更高效、更可控的释放结构；再往后，当人类理解了原子层面的结构，核裂变与核聚变把能量释放效率推到了化学反应无法企及的高度。这里发生跃迁的核心不是“用得更多”，而是“理解更深”，是结构层面的认知把同样的质量带进了完全不同的能量通道。</p>
 <p>但结构也从来不是脱离规模的空谈，因为结构的效果需要被放大才能显现，原子弹与氢弹都有临界质量，跨不过阈值就只是物理材料，跨过去才会成为历史事件。放到 AI 上同理，我们既需要结构，因为结构反映我们对智能本源的理解，也需要规模，因为规模能把结构的潜力放大成稳定可复现的能力。问题在于，当下我们对现有结构常常抱着一种近似宗教的信任，仿佛只要继续扩大训练，智能就会像神谕一样自动降临。更微妙的是，这种信任并非毫无依据，因为数据与算力作为祭品确实部分有效，工程上也确实在不断交付收益。正因为有效，我们反而缺少足够的动机去追问更深的机制，去寻找能够指导下一轮结构跃迁的东西，也就是一种更接近“质能方程”的理解。没有它,我们大概就只能在同一种结构里一直加码、内卷下去。</p>
@@ -52,7 +40,7 @@
 <p>这就引出一个更难的问题：每种数据背后都有对应的时空结构与压缩模式，我们是否能拥有一种更统一的结构，使模型不必依赖人类语言的显式标注去监督结构，而是能在训练过程中更自然地形成通用的计算组织方式。我不知道最终答案是什么，但我越来越倾向于一种方向：与其用语言把世界切成标签再强迫模型学习，不如把更通用的计算结构引入模型，使其具备生成结构的能力，而不仅仅是在固定结构里拟合的能力。人脑是一个很好的提醒，神经元当然重要，但更重要的是它们在漫长演化中形成的多尺度结构与动力学机制，而语言更像是后来为了生存而发明的符号工具，它强大却未必是智能的最底层地基。</p>
 <p>所以，当我们在熵增的物理世界里追求一个看起来能熵减的 AGI，这种追求本身确实带着浪漫色彩。只不过浪漫不该成为停止思考的理由。我们可以继续把 scaling 做到极致，因为它稳健而且有效，但与此同时我们更应该把注意力分给结构，把资源分给机制，把野心分给对本质的探索。与其不断加大祭品等待神迹，不如更诚实地理解祭坛背后的物理与计算，让下一次所谓的涌现，更像可解释的必然，而不是偶然的赐福。</p>
         </div>
-        <p class="article-back"><a href="../index.html#blogs">返回 Blogs</a></p>
+        <p class="article-back"><a href="../index.html#ideas">返回想法</a></p>
       </article>
     </main>
 
