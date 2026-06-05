@@ -1,13 +1,17 @@
-const searchForm = document.querySelector(".search");
-const searchInput = document.querySelector("#query");
-const posts = Array.from(document.querySelectorAll(".post"));
+const themeToggle = document.querySelector(".theme-toggle");
+const storedTheme = window.localStorage.getItem("theme");
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-searchForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const query = searchInput.value.trim().toLowerCase();
+function setTheme(theme) {
+  const isDark = theme === "dark";
+  document.body.classList.toggle("theme-dark", isDark);
+  themeToggle?.setAttribute("aria-pressed", String(isDark));
+}
 
-  posts.forEach((post) => {
-    const text = post.textContent.toLowerCase();
-    post.hidden = Boolean(query) && !text.includes(query);
-  });
+setTheme(storedTheme || (prefersDark ? "dark" : "light"));
+
+themeToggle?.addEventListener("click", () => {
+  const nextTheme = document.body.classList.contains("theme-dark") ? "light" : "dark";
+  window.localStorage.setItem("theme", nextTheme);
+  setTheme(nextTheme);
 });

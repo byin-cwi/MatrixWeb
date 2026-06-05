@@ -138,27 +138,50 @@ function markdownToHtml(markdown) {
   return html.join("\n");
 }
 
-function postDateParts(date) {
+function formatPublishedDate(date) {
   const [year, month, day] = date.split("-");
-  return { year, short: `${month}-${day}` };
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  return `${months[Number(month) - 1]} ${day}, ${year}`;
+}
+
+function groupPostsByYear(posts) {
+  const groups = [];
+  for (const post of posts) {
+    const year = post.date.slice(0, 4);
+    let group = groups.find((item) => item.year === year);
+    if (!group) {
+      group = { year, posts: [] };
+      groups.push(group);
+    }
+    group.posts.push(post);
+  }
+  return groups;
 }
 
 function siteHeader(prefix = "") {
-  const home = prefix ? `${prefix}index.html` : "#top";
+  const home = `${prefix}index.html`;
   return `    <header class="site-header">
       <div class="wrap header-grid">
-        <a class="brand" href="${home}" aria-label="回到首页">
-          <span class="brand-mark" aria-hidden="true">∑</span>
-          <span>
-            <strong>MATRIX93</strong>
-            <small>分享一些浅见，欢迎大家交流</small>
-          </span>
-        </a>
+        <a class="brand" href="${home}" aria-label="回到首页">Bojian Yin</a>
         <nav class="nav" aria-label="主导航">
-          <a href="${prefix}index.html#articles"><span class="nav-cn">道法</span><br><span class="nav-en">Dao</span></a>
-          <a href="${prefix}index.html#projects"><span class="nav-cn">想法</span><br><span class="nav-en">IDEA</span></a>
-          <a href="${prefix}index.html#archive"><span class="nav-cn">做法</span><br><span class="nav-en">METHOD</span></a>
-          <a href="${prefix}index.html#about"><span class="nav-cn">关于“我”</span><br><span class="nav-en">ME</span></a>
+          <a href="${prefix}index.html#publications">Publications</a>
+          <a href="${prefix}index.html#blogs">Blogs</a>
+          <a href="${prefix}index.html#miscs">Miscs</a>
+          <a href="${prefix}index.html#cv">CV</a>
+          <button class="theme-toggle" type="button" aria-label="Theme settings">⚙</button>
         </nav>
       </div>
     </header>`;
@@ -181,59 +204,46 @@ ${scriptPath ? `    <script src="${scriptPath}"></script>\n` : ""}  </body>
 `;
 }
 
-function postCard(post) {
-  const date = postDateParts(post.date);
-  return `          <article class="post">
-            <div class="post-date">
-              <span>${date.year}</span>
-              <strong>${date.short}</strong>
-            </div>
-            <div class="post-body">
-              <h3><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
-              <p>${escapeHtml(post.summary)}</p>
-              <div class="meta">
-                ${post.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("\n                ")}
-                <span>${escapeHtml(post.readTime)}</span>
-              </div>
-            </div>
-          </article>`;
+function blogEntry(post, prefix = "") {
+  return `              <article class="blog-entry">
+                <h3 class="blog-title"><a href="${prefix}posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
+                <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="${post.date}">${formatPublishedDate(post.date)}</time></p>
+                <p class="blog-summary">${escapeHtml(post.summary)}</p>
+              </article>`;
 }
 
-function sidebar() {
+function blogGroups(posts, prefix = "") {
+  return groupPostsByYear(posts)
+    .map(
+      (group) => `            <section class="blog-year-group" aria-labelledby="blogs-${group.year}">
+              <h3 id="blogs-${group.year}" class="blog-year">${group.year}</h3>
+${group.posts.map((post) => blogEntry(post, prefix)).join("\n")}
+            </section>`
+    )
+    .join("\n");
+}
+
+function profileIcon(name) {
+  const icons = {
+    location: '<svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.6"></circle></svg>',
+    email: '<svg viewBox="0 0 24 24" role="img" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>',
+  };
+  return icons[name] || "";
+}
+
+function sidebar(prefix = "") {
   return `      <aside class="sidebar" aria-label="站点侧栏">
         <section class="profile">
           <div class="avatar" aria-hidden="true">
-            <img src="assets/notebook.svg" alt="">
+            <img src="${prefix}assets/profile.jpg" alt="">
           </div>
-          <h2>MATRIX93</h2>
-          <p>研究、工程、写作。把零散想法整理成可以复查的公开记录。</p>
-        </section>
-
-        <section class="side-block">
-          <h2>分类</h2>
-          <ul class="tag-list">
-            <li><a href="#">机器学习 <span>12</span></a></li>
-            <li><a href="#">工程实践 <span>9</span></a></li>
-            <li><a href="#">数学笔记 <span>7</span></a></li>
-            <li><a href="#">读书摘记 <span>5</span></a></li>
-          </ul>
-        </section>
-
-        <section class="side-block">
-          <h2>检索</h2>
-          <form class="search" role="search">
-            <label class="sr-only" for="query">搜索文章</label>
-            <input id="query" type="search" placeholder="关键词">
-            <button type="submit">搜索</button>
-          </form>
-        </section>
-
-        <section class="side-block">
-          <h2>链接</h2>
-          <ul class="links">
-            <li><a href="https://kexue.fm/" target="_blank" rel="noreferrer">科学空间</a></li>
-            <li><a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a></li>
-            <li><a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a></li>
+          <h2>Bojian Yin</h2>
+          <ul class="profile-links">
+            <li><span class="profile-icon profile-icon-svg" aria-hidden="true">${profileIcon("location")}</span><span>Beijing, China</span></li>
+            <li><span class="profile-icon profile-icon-svg" aria-hidden="true">${profileIcon("email")}</span><a href="mailto:yinbojian93@gmail.com">Email</a></li>
+            <li><span class="profile-icon profile-icon-gh" aria-hidden="true">GH</span><a href="https://github.com/byin-cwi" target="_blank" rel="noreferrer">GitHub</a></li>
+            <li><span class="profile-icon profile-icon-linkedin" aria-hidden="true">in</span><a href="https://www.linkedin.com/in/bojianyin" target="_blank" rel="noreferrer">LinkedIn</a></li>
+            <li><span class="profile-icon" aria-hidden="true">CV</span><a href="${prefix}assets/cv_DM.pdf">CV</a></li>
           </ul>
         </section>
       </aside>`;
@@ -243,79 +253,101 @@ function buildIndex(posts) {
   const body = `${siteHeader()}
 
     <main id="top" class="wrap layout">
+${sidebar()}
       <section class="content">
-        <section id="articles" class="section" aria-labelledby="articles-title">
-          <div class="section-head">
-            <h2 id="articles-title">近期文章</h2>
-            <a href="#archive">全部归档</a>
-          </div>
-
-${posts.map(postCard).join("\n\n")}
+        <section id="about" class="section" aria-labelledby="about-title">
+          <h1 id="about-title">About Me</h1>
+          <p>
+            I am Bojian Yin, an Associate Researcher at the Institute of Automation, Chinese Academy of Sciences.
+            My research lies at the intersection of deep learning, brain-inspired intelligence, and foundational AI.
+            I study the mathematical mechanisms that make intelligent learning efficient, adaptive, and robust.
+          </p>
+          <p>
+            More broadly, I want to bring the efficiency and adaptability of biological intelligence to modern AI.
+            Today's models learn slowly, forget what they have seen, and demand enormous resources; I search for the
+            mathematical principles behind learning and reasoning that could let machines learn the way brains do,
+            continually, efficiently, and robustly, and turn those principles into real algorithms and systems. This
+            pursuit has led to two first-author papers in <em>Nature Machine Intelligence</em>.
+          </p>
         </section>
 
-        <section id="projects" class="section" aria-labelledby="projects-title">
-          <div class="section-head">
-            <h2 id="projects-title">项目</h2>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">更多代码</a>
-          </div>
-          <div class="project-list">
-            <article class="project">
-              <h3>MatrixWeb</h3>
-              <p>这个仓库本身：Markdown 写作、无依赖构建、适合托管到 GitHub Pages。</p>
-              <span>Markdown / HTML / CSS / GitHub Pages</span>
-            </article>
-            <article class="project">
-              <h3>Research Notes</h3>
-              <p>面向长期写作的笔记系统，按主题与时间组织，可从 Markdown 文章继续扩展。</p>
-              <span>Writing / Archive / Review</span>
-            </article>
-          </div>
+        <section id="research" class="section" aria-labelledby="research-title">
+          <h2 id="research-title">Research Interests</h2>
+          <p>
+            My research focuses on the mathematical and brain-inspired principles of learning, and on turning them into
+            robust, generalizable algorithms for large language models and agentic systems. My work spans several
+            interconnected areas:
+          </p>
+          <ul class="interest-list">
+            <li><strong>Learning Algorithms Beyond Backpropagation.</strong> I develop local, online, and forward-mode learning rules that let large models train and adapt efficiently, including continual and test-time learning in dynamic environments. This line includes Forward Propagation Through Time and Stochastic Variational Propagation as scalable, biologically grounded alternatives to backpropagation.</li>
+            <li><strong>Memory and Continual Inference.</strong> I study persistent and associative memory together with reset-free continual inference, enabling long-context LLMs and long-horizon agents to keep learning and reasoning over time without forgetting or restarting. See <em>Never Reset Again</em> for a mathematical framework for continual inference in recurrent models.</li>
+            <li><strong>Efficient Sequence Modeling and Reasoning.</strong> I design efficient recurrent and state-space architectures for long-range sequence modeling, and adaptive inference-time computation that scales with problem difficulty. Recent work includes sparse selective-update RNNs for long-range modeling.</li>
+            <li><strong>Mathematical Foundations of Learning and Generalization.</strong> A core theme across my research is understanding, mathematically, when and why these mechanisms learn and generalize, work that began in spiking and recurrent networks, including two papers in <em>Nature Machine Intelligence</em>, and now extends to generative and agentic AI.</li>
+          </ul>
+          <p>
+            Feel free to reach out if you're interested in collaborating or just chatting about learning algorithms,
+            brain-inspired AI, or LLMs and agents.
+          </p>
         </section>
 
-        <section id="archive" class="section" aria-labelledby="archive-title">
-          <h2 id="archive-title">归档</h2>
-          <ol class="archive">
-${posts.map((post) => `            <li><time datetime="${post.date}">${post.date}</time><a href="posts/${post.slug}.html">${escapeHtml(post.title)}</a></li>`).join("\n")}
+        <section id="publications" class="section" aria-labelledby="publications-title">
+          <h2 id="publications-title">Publications</h2>
+          <ol class="publication-list">
+            <li>
+              <strong>Accurate online training of dynamical spiking neural networks through Forward Propagation Through Time.</strong>
+              B. Yin, F. Corradi, S. M. Bohte. <em>Nature Machine Intelligence</em>, 2023.
+            </li>
+            <li>
+              <strong>Accurate and efficient time-domain classification with adaptive spiking recurrent neural networks.</strong>
+              B. Yin, F. Corradi, S. M. Bohte. <em>Nature Machine Intelligence</em>, 2021.
+            </li>
+            <li>
+              <strong>Efficient Sparse Selective-Update RNNs for Long-Range Sequence Modeling.</strong>
+              B. Yin, F. Corradi. <em>arXiv preprint, under review</em>, 2026.
+            </li>
+            <li>
+              <strong>Stochastic Variational Propagation: Local, Scalable and Efficient Alternative to Backpropagation.</strong>
+              B. Yin, F. Corradi. <em>arXiv preprint, under review</em>, 2025.
+            </li>
+            <li>
+              <strong>Using the structure of genome data in the design of deep neural networks for predicting amyotrophic lateral sclerosis from genotype.</strong>
+              B. Yin, M. Balvert, R. A. van der Spek, B. E. Dutilh, S. M. Bohte, J. Veldink, A. Schonhuth. <em>Bioinformatics</em>, 2019.
+            </li>
           </ol>
         </section>
 
-        <section id="about" class="section about" aria-labelledby="about-title">
-          <h2 id="about-title">关于</h2>
+        <section id="blogs" class="section blog-posts" aria-labelledby="blogs-title">
+          <h2 id="blogs-title" class="blog-posts-title">Blog posts</h2>
+${blogGroups(posts)}
+        </section>
+
+        <section id="miscs" class="section" aria-labelledby="miscs-title">
+          <h2 id="miscs-title">Miscs</h2>
           <p>
-            在这里替换成你的简介：研究方向、工程经验、目前关注的问题、联系方式，以及你希望读者如何引用或联系你。
+            I have worked across academia, national research institutes, and neuromorphic hardware startups, with experience
+            in algorithm design, mathematical modeling, FPGA and embedded deployment, SDK optimization, and interdisciplinary collaboration.
           </p>
-          <dl>
-            <div>
-              <dt>Email</dt>
-              <dd><a href="mailto:you@example.com">you@example.com</a></dd>
-            </div>
-            <div>
-              <dt>GitHub</dt>
-              <dd><a href="https://github.com/byin-cwi" target="_blank" rel="noreferrer">@byin-cwi</a></dd>
-            </div>
-            <div>
-              <dt>RSS</dt>
-              <dd><a href="#">/feed.xml</a></dd>
-            </div>
-          </dl>
+        </section>
+
+        <section id="cv" class="section" aria-labelledby="cv-title">
+          <h2 id="cv-title">CV</h2>
+          <p><a href="assets/cv_DM.pdf">Download CV</a>.</p>
         </section>
       </section>
-
-${sidebar()}
     </main>
 
     <footer class="site-footer">
       <div class="wrap">
-        <p>© 2026 MATRIX93. Built with Markdown, HTML, CSS and Git.</p>
+        <p>© 2026 Bojian Yin. Built with Markdown, HTML, CSS and Git.</p>
       </div>
     </footer>
 `;
 
   return documentShell({
-    title: "MATRIX93 | 个人笔记与研究日志",
-    description: "一个 Git 管理、GitHub Pages 可部署的个人网站，适合写研究笔记、技术文章、项目记录与读书摘记。",
+    title: "Bojian Yin | About Me",
+    description: "Bojian Yin 的学术个人主页、研究笔记和博客归档。",
     cssPath: "assets/styles.css",
-    scriptPath: "assets/main.js",
+    scriptPath: "assets/main.js?v=academic-ui",
     body,
   });
 }
@@ -323,27 +355,29 @@ ${sidebar()}
 function buildPost(post) {
   const body = `${siteHeader("../")}
 
-    <main id="top" class="wrap article-page">
+    <main id="top" class="wrap layout article-layout">
+${sidebar("../")}
       <article class="article section">
         <p class="article-date">${escapeHtml(post.date)}</p>
         <div class="article-content">
 ${markdownToHtml(post.markdown)}
         </div>
-        <p class="article-back"><a href="../index.html#articles">返回文章列表</a></p>
+        <p class="article-back"><a href="../index.html#blogs">返回 Blogs</a></p>
       </article>
     </main>
 
     <footer class="site-footer">
       <div class="wrap">
-        <p>© 2026 MATRIX93. Built with Markdown, HTML, CSS and Git.</p>
+        <p>© 2026 Bojian Yin. Built with Markdown, HTML, CSS and Git.</p>
       </div>
     </footer>
 `;
 
   return documentShell({
-    title: `${post.title} | MATRIX93`,
+    title: `${post.title} | Bojian Yin`,
     description: post.summary,
     cssPath: "../assets/styles.css",
+    scriptPath: "../assets/main.js?v=academic-ui",
     body,
   });
 }

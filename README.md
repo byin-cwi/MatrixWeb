@@ -1,6 +1,6 @@
 # MatrixWeb
 
-My blog: 一个 Git 管理、GitHub Pages 可部署的个人网站。文章使用 Markdown 写在 `content/posts/`，构建脚本会生成首页列表和 `posts/*.html` 文章页。
+一个 Git 管理、GitHub Pages 可部署的学术个人主页。首页采用 AcademicPages 风格：顶部导航、左侧 profile 侧栏、右侧 About / Research / Publications / Blogs 内容区。文章使用 Markdown 写在 `content/posts/`，构建脚本会生成首页博客列表和 `posts/*.html` 文章页。
 
 ## 文件结构
 
@@ -17,6 +17,8 @@ My blog: 一个 Git 管理、GitHub Pages 可部署的个人网站。文章使�
 ├── assets/
 │   ├── main.js
 │   ├── notebook.svg
+│   ├── profile.jpg
+│   ├── cv_DM.pdf
 │   └── styles.css
 └── .github/
     └── workflows/
@@ -86,6 +88,6 @@ git push -u origin main
 
 ## 下一步可替换内容
 
-- 把 `index.html` 中的“你的名字”、邮箱、GitHub 链接替换成真实信息。
+- 在 `scripts/build.js` 中继续维护 profile、About Me、Research Interests、Publications、Teaching、CV 等主页内容。
 - 把示例文章替换成你的研究笔记或项目复盘。
 - 如果文章变多，可以继续增强 `scripts/build.js`，或者迁移到 Jekyll、Hugo、Astro。
