@@ -399,6 +399,11 @@ function main() {
   if (!fs.existsSync(postsDir)) {
     fs.mkdirSync(postsDir);
   }
+  for (const fileName of fs.readdirSync(postsDir)) {
+    if (fileName.endsWith(".html")) {
+      fs.unlinkSync(path.join(postsDir, fileName));
+    }
+  }
   fs.writeFileSync(path.join(root, "index.html"), buildIndex(posts));
   for (const post of posts) {
     fs.writeFileSync(path.join(postsDir, `${post.slug}.html`), buildPost(post));
