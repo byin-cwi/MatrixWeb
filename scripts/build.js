@@ -304,7 +304,7 @@ ${sidebar()}
         <section id="about" class="section" aria-labelledby="about-title">
           <h1 id="about-title">About Me</h1>
           <p>
-            I am Bojian Yin, a Professor at the Institute of Automation, Chinese Academy of Sciences.
+            I am Bojian Yin, an Associate Professor at the Institute of Automation, Chinese Academy of Sciences.
             My research lies at the intersection of deep learning, brain-inspired intelligence, and foundational AI.
             I study the mathematical mechanisms that make intelligent learning efficient, adaptive, and robust.
           </p>
