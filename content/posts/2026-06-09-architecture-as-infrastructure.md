@@ -10,6 +10,8 @@ section: idea
 
 # 当架构成为基础设施
 
+![When Architecture Becomes Infrastructure](../assets/architecture-infrastructure-hero.png)
+
 *随着主流大模型在结构上日趋一致，越来越多的证据表明，决定性的进展可能正从网络设计转向训练方法。*
 
 过去数年间，人工智能领域反复争论的一个命题，是哪一种新架构将取代 Transformer。2023 至 2024 年间，Mamba、RWKV、RetNet 等一批以“线性复杂度”为卖点的模型相继出现，每一次都伴随着关于“Transformer 时代即将结束”的讨论。到 2026 年，这一命题在很大程度上已经平息。这不是因为出现了取代者，而是因为主流架构趋于收敛。与此同时，研究者中也逐渐形成一种判断，认为架构本身已不再是大模型能力差距的主要来源。

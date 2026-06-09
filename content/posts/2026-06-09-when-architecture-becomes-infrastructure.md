@@ -10,6 +10,8 @@ section: blog
 
 # When Architecture Becomes Infrastructure
 
+![When Architecture Becomes Infrastructure](../assets/architecture-infrastructure-hero.png)
+
 *As the leading large language models converge on a common structure, the decisive gains increasingly seem to come not from network design but from how models are trained.*
 
 For several years, the same question kept resurfacing in AI. Which new architecture would finally unseat the Transformer? Between 2023 and 2024, a string of models promising linear-time scaling, among them Mamba, RWKV, and RetNet, arrived one after another, each greeted as a possible end of the Transformer era. By 2026 the question has largely gone quiet, not because a successor won but because the mainstream architecture has converged. Meanwhile researchers have increasingly come to think that architecture itself is no longer the main source of the gap between models.
