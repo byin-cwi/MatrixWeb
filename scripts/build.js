@@ -4,6 +4,7 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const contentDir = path.join(root, "content", "posts");
 const postsDir = path.join(root, "posts");
+const siteUrl = "https://byin-cwi.github.io/MatrixWeb";
 
 function escapeHtml(value) {
   return String(value)
@@ -185,8 +186,39 @@ function formatPublishedDate(date) {
   return `${months[Number(month) - 1]} ${day}, ${year}`;
 }
 
+function formatCitationDate(date) {
+  const [year, month, day] = date.split("-");
+  const months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+  return `${months[Number(month) - 1]} ${day}, ${year}`;
+}
+
 function formatPostNumber(number) {
   return String(number).padStart(2, "0");
+}
+
+function citationKey(post) {
+  return `matrixweb-${post.slug}`.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+}
+
+function citationBlock(post) {
+  const url = `${siteUrl}/posts/${post.slug}.html`;
+  const prompt = post.section === "idea" ? "如果您需要引用本文，请参考：" : "If you need to cite this post, please use:";
+  const citationPrefix = `Bojian Yin. (${formatCitationDate(post.date)}). ${post.title} [Blog post]. Retrieved from `;
+  const bibtexMonth = formatCitationDate(post.date).split(" ")[0].replace(".", "");
+  const bibtex = `@online{${citationKey(post)},
+        title={${post.title}},
+        author={Bojian Yin},
+        year={${post.date.slice(0, 4)}},
+        month={${bibtexMonth}},
+        url={\\url{${url}}},
+}`;
+
+  return `        <section class="citation-box" aria-labelledby="citation-title-${escapeHtml(post.slug)}">
+          <h2 id="citation-title-${escapeHtml(post.slug)}">Citation</h2>
+          <p>${escapeHtml(prompt)}</p>
+          <p class="citation-text">${escapeHtml(citationPrefix)}<a href="${escapeHtml(url)}">${escapeHtml(url)}</a></p>
+          <pre class="citation-bibtex"><code>${escapeHtml(bibtex)}</code></pre>
+        </section>`;
 }
 
 function groupPostsByYear(posts) {
@@ -397,7 +429,7 @@ ${blogGroups(ideaPosts, "", "ideas")}
   return documentShell({
     title: "Bojian Yin | About Me",
     description: "Bojian Yin 的学术个人主页、研究笔记和博客归档。",
-    cssPath: "assets/styles.css?v=inline-post-numbers",
+    cssPath: "assets/styles.css?v=citation-blocks",
     scriptPath: "assets/main.js?v=academic-ui",
     body,
   });
@@ -415,6 +447,7 @@ function buildPost(post) {
         <div class="article-content">
 ${markdownToHtml(post.markdown)}
         </div>
+${citationBlock(post)}
         <p class="article-back"><a href="../index.html#${returnHash}">${returnLabel}</a></p>
       </article>
     </main>
@@ -429,7 +462,7 @@ ${markdownToHtml(post.markdown)}
   return documentShell({
     title: `${post.title} | Bojian Yin`,
     description: post.summary,
-    cssPath: "../assets/styles.css?v=inline-post-numbers",
+    cssPath: "../assets/styles.css?v=citation-blocks",
     scriptPath: "../assets/main.js?v=academic-ui",
     body,
   });

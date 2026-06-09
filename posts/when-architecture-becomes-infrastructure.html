@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When Architecture Becomes Infrastructure | Bojian Yin</title>
+    <meta name="description" content="As leading large language models converge on a common structure, the decisive gains increasingly seem to come from training methods, data, reinforcement learning, and tool use.">
+    <link rel="stylesheet" href="../assets/styles.css?v=citation-blocks">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-grid">
+        <a class="brand" href="../index.html" aria-label="回到首页">Bojian Yin</a>
+        <nav class="nav" aria-label="主导航">
+          <a href="../index.html#publications">Publications</a>
+          <a href="../index.html#blogs">Blog</a>
+          <a href="../index.html#ideas">想法</a>
+          <a href="../index.html#miscs">Miscs</a>
+          <a href="../index.html#cv">CV</a>
+          <button class="theme-toggle" type="button" aria-label="Theme settings">⚙</button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top" class="wrap layout article-layout">
+      <article class="article section">
+        <div class="post-number post-number-page">Blog 03</div>
+        <p class="article-date">2026-06-09</p>
+        <div class="article-content">
+<h1>When Architecture Becomes Infrastructure</h1>
+<p><em>As the leading large language models converge on a common structure, the decisive gains increasingly seem to come not from network design but from how models are trained.</em></p>
+<p>For several years, the same question kept resurfacing in AI. Which new architecture would finally unseat the Transformer? Between 2023 and 2024, a string of models promising linear-time scaling, among them Mamba, RWKV, and RetNet, arrived one after another, each greeted as a possible end of the Transformer era. By 2026 the question has largely gone quiet, not because a successor won but because the mainstream architecture has converged. Meanwhile researchers have increasingly come to think that architecture itself is no longer the main source of the gap between models.</p>
+<h2>Converging Architectures</h2>
+<p>The convergence is a response to two long-standing pressures. The first is the cost of attention over long contexts. Standard self-attention scales quadratically in both compute and memory with sequence length, and once a context stretches to hundreds of thousands or millions of tokens, the key-value (KV) cache alone can exhaust a large GPU cluster. The second is the cost and energy of dense computation. Every token activates the full set of parameters, so a model's growth runs up against both bandwidth and power. Much of the recent evolution in frontier architectures is a direct answer to these two problems, using linear-complexity structures to ease the first and sparse activation to ease the second.</p>
+<p>The leading models today look strikingly alike. Their backbone is built from linear-complexity sequence models, usually state-space models in the Mamba family or variants of gated linear attention, which hold a long context at modest memory and compute cost; interleaved among them sits a small number of full-attention layers that handle precise retrieval and harder reasoning. This hybrid recipe is now the default across a range of public models. Alibaba's Qwen3.5 uses Gated DeltaNet; Ant Group's Ling 2.5 combines Lightning Attention with the Multi-head Latent Attention (MLA) it borrowed from DeepSeek; Zhipu's GLM-5 uses sparse attention; and Tencent's Hunyuan-A13B applies a similar hybrid in a production model. Across these experiments the near-optimal ratio of linear to attention layers comes out at around 7:1. The payoff shows up mainly in long contexts. Ling 2.5, at one trillion parameters, runs roughly three times the throughput of a comparable Kimi K2 at a 32k context.</p>
+<p>Sparsity is the other settled direction. Almost every flagship model is now a mixture-of-experts (MoE), and the fraction of parameters activated per token keeps falling. DeepSeek-V3 activates only about 5.5% of its parameters on each forward pass; Meta's Llama 4 Maverick, about 4.3%; Kimi K2.5, about 3.2%. DeepSeek V4-Pro activates roughly 49 billion of its 1.6 trillion parameters at a time, and Alibaba's Qwen3-Coder-Next, with 80 billion parameters in all, activates just 3 billion, yet outperforms models several times its active size on coding tasks. Mechanisms such as Mixture-of-Depths, which routes easy tokens through fewer layers, loosen the link between compute and parameter count even further.</p>
+<p>Newer components are still being folded into this frame. One concerns how models reason. By default, today's models behave more like fast, intuitive responders, and the &quot;slow thinking&quot; that emerged over the past year relies mainly on chains of thought, writing each reasoning step out as text. A newer idea, implicit reasoning, lets the model iterate in latent space instead of emitting its intermediate steps as text, scaling the compute spent on reasoning without lengthening the output. It has already moved from concept to practice like HRM and its variants; in robotic control, for example, iterating a single action module a few times can sharply raise success rates. Low-precision training, too, is no longer confined to deployment. NVIDIA has reported pretraining a 12-billion-parameter model on ten trillion tokens in the 4-bit floating-point format NVFP4, reaching loss and downstream accuracy close to an FP8 baseline. It is the largest 4-bit training run disclosed so far.</p>
+<p>Taken together, frontier architecture has converged on a fairly settled shape, built from a linear hybrid backbone, fine-grained sparsity, steadily lower numerical precision, and a gradual move toward implicit reasoning. What is striking is that the various teams arrived here largely independently, rather than any single design winning out.</p>
+<h2>Where The Gains Are Coming From</h2>
+<p>On one level, how good a model's architecture is no longer seems to be what sets it apart.</p>
+<p>Consider the most striking jumps in capability over the past year. They include OpenAI's o-series and the GPT-5 models that followed, DeepSeek's R1, and agents such as Kimi K2.6 that lead on agentic coding and tool-use benchmarks and can carry out multi-step tasks on their own. Most of these owe little to new network structure. They come instead from a set of training methods, such as reinforcement learning against verifiable rewards, more compute spent at inference time, calls to external tools and code execution, and the mixing and cleaning of training data. The point is clearest in the gap between open and closed models. On SWE-bench Verified, the open DeepSeek V4-Pro now trails Claude Opus 4.6 by about 0.2 points, and its overall distance from the other closed frontier models, such as GPT-5.2 and Gemini 3.1 Pro, is similarly small. What closes that gap is data and the RL pipeline, not a change in the underlying architecture.</p>
+<p>The return of symbolic reasoning is a telling example. For years, a revival of &quot;neuro-symbolic&quot; methods was seen as a likely route to stronger, more rigorous reasoning, and the usual vision was to build a dedicated symbolic module into the network. That capability is indeed improving, but not in the way it was imagined. A model gains reliable reasoning and self-checking by calling a code interpreter or an external verifier and then doing reinforcement learning against what the verifier returns. The symbolic part, in other words, enters through a tool interface rather than through the architecture.</p>
+<p>So architecture in 2026 looks more like infrastructure. It remains necessary, but it is no longer where the contest is decided.</p>
+<h2>Where Elegance And Compute Pull Apart</h2>
+<p>A related pattern is worth dwelling on. Many mathematically elegant methods see their theoretical advantage diluted, in practice, by the sheer scale of compute and resources. This is not a new observation. In &quot;The Bitter Lesson,&quot; Richard Sutton argued that over the long run, general methods that make better use of computation tend to beat methods built on human insight and clever structure. Sara Hooker's &quot;The Hardware Lottery&quot; pushed the point further, arguing that whether a research idea succeeds depends largely on whether the hardware of the day happens to suit it, rather than on the idea's intrinsic merit.</p>
+<p>Still, &quot;elegance always loses to brute force&quot; would be too crude a summary. What gets diluted is mainly the kind of elegance that hard-codes human knowledge, priors, and structure into the model. Given enough data and compute, the model tends to learn those regularities on its own, and the hand-designed constraints can turn into a liability. The other kind of elegance, the simple and regular sort that is well matched to parallel matrix computation, is amplified by scale rather than worn down. The Transformer is itself an instance of the latter. It won precisely because its structure fits what GPUs do well. A more precise way to put it is that elegance aligned with compute gets amplified, while elegance at odds with compute gets washed out.</p>
+<p>Several of the developments already mentioned bear this out. State-space models are theoretically elegant; their continuous-time formulation and the HiPPO framework give a principled account of long-range memory. Yet by Mamba-2, the designers deliberately gave up some of that expressiveness to train faster on GPUs, trading away part of the theoretical refinement for raw speed. Low-precision training tells the same story. The cleanest version of the idea is 1-bit BitNet, which remains a research curiosity. What actually trains stably at frontier scale is 4-bit NVFP4, which leans on a set of distinctly inelegant engineering tricks, among them Random Hadamard transforms, stochastic rounding, and keeping a few layers in high precision. The clean idea survives, but in a diluted, heavily patched, engineered form.</p>
+<p>None of this means theory has lost its value; rather, its role has shifted. In many cases the elegant mechanism itself is replaced, but its value as a conceptual frame survives. State-space theory was simplified, yet it seeded the entire line of hybrid architectures. And some methods may hold a real theoretical edge that only appears at scales we cannot yet afford, closer to &quot;too early&quot; than to &quot;wrong.&quot; On that reading, dilution looks less like an iron law than a feature of the current, compute-rich moment; once the easy gains from cheap compute are spent and the low-hanging improvements run out, theory may again become what separates the leaders.</p>
+<h2>What Is Still Open</h2>
+<p>None of this means architecture is fully settled. But the directions that remain unresolved are, for now, refinements of the existing frame rather than challengers to it.</p>
+<p>One cost of implicit reasoning is interpretability. A chain of thought written out as text is often called inefficient, yet its very visibility is valuable, since researchers can apply reinforcement learning to an observable reasoning process, check it step by step, and watch for anomalies. The latent iteration in implicit reasoning buries that process in high-dimensional representations that cannot be read off directly. Work has already begun on &quot;decoding&quot; the internal states of such models, treated as a safety question. For that reason, the more cautious expectation is that implicit reasoning will serve as a complement to explicit reasoning rather than a replacement for it.</p>
+<p>Multimodality and world models are a second area still in motion, and a heavily funded one. DeepMind's Genie 2 can generate an interactive 3D environment with consistent physics from a single image; Meta's V-JEPA 2, trained on roughly a million hours of video plus tens of hours of robot interaction, reaches high zero-shot success at manipulation in unfamiliar environments; and Yann LeCun left Meta in early 2026 to found AMI Labs, a lab devoted to general-purpose world models. Even so, it would be a mistake to read this as text being sidelined while world models take over. Vision-only world models hit a wall of their own. From video alone they struggle to distinguish actions with similar intent (pretending to twist something versus actually twisting it) and need other modalities or physical reasoning to resolve the ambiguity. V-JEPA 2's strongest visual reasoning, in fact, appears when it is paired with a language model. On the evidence so far, this looks more like a fusion of modalities than one displacing another. Relatedly, the input side is trying to shed the fixed tokenizer, with some work moving to byte-level, end-to-end processing, though that remains largely a research direction for now.</p>
+<p>Generation itself has alternatives to autoregression. Diffusion language models drop the token-by-token, sequential decoding and instead recover a whole passage from noise in parallel, sidestepping the latency and the KV-cache bottleneck that autoregression carries with it. In early 2026, Inception released Mercury 2, the first diffusion model aimed at reasoning, with generation speeds of more than a thousand tokens per second, roughly ten times a comparable autoregressive model; Google's Gemini Diffusion and ByteDance's Seed Diffusion are pushing in the same direction. For now, though, pure diffusion models still trail autoregressive ones clearly on reasoning benchmarks such as MMLU and GSM8K, come close only on tasks like code generation, and grow expensive on long outputs. So they are likelier to arrive in practice first as hybrids, pairing block-wise diffusion with autoregression, than to replace it outright.</p>
+<p>Taken together, the signs point to an architecture that has largely entered a stable phase and is becoming shared infrastructure. What now separates one model from another is increasingly the training data, the reinforcement-learning pipeline, and the tools a model can reach, which also happen to be the parts each lab discloses least, and the sweet spot everyone is now fighting over.</p>
+        </div>
+        <section class="citation-box" aria-labelledby="citation-title-when-architecture-becomes-infrastructure">
+          <h2 id="citation-title-when-architecture-becomes-infrastructure">Citation</h2>
+          <p>If you need to cite this post, please use:</p>
+          <p class="citation-text">Bojian Yin. (Jun. 09, 2026). When Architecture Becomes Infrastructure [Blog post]. Retrieved from <a href="https://byin-cwi.github.io/MatrixWeb/posts/when-architecture-becomes-infrastructure.html">https://byin-cwi.github.io/MatrixWeb/posts/when-architecture-becomes-infrastructure.html</a></p>
+          <pre class="citation-bibtex"><code>@online{matrixweb-when-architecture-becomes-infrastructure,
+        title={When Architecture Becomes Infrastructure},
+        author={Bojian Yin},
+        year={2026},
+        month={Jun},
+        url={\url{https://byin-cwi.github.io/MatrixWeb/posts/when-architecture-becomes-infrastructure.html}},
+}</code></pre>
+        </section>
+        <p class="article-back"><a href="../index.html#blogs">返回 Blog</a></p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© 2026 Bojian Yin. Built with Markdown, HTML, CSS and Git.</p>
+      </div>
+    </footer>
+
+    <script src="../assets/main.js?v=academic-ui"></script>
+  </body>
+</html>

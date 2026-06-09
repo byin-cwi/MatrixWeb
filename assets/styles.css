@@ -533,6 +533,32 @@ pre {
   background: transparent;
 }
 
+.citation-box {
+  margin-top: 42px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.citation-box h2 {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+
+.citation-box p {
+  margin: 0 0 12px;
+}
+
+.citation-text {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.citation-bibtex {
+  margin-top: 14px;
+  font-size: 0.82rem;
+}
+
 .article-back {
   margin-top: 32px;
   border-top: 1px solid var(--line);
