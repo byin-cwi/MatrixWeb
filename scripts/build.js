@@ -66,6 +66,7 @@ function markdownToHtml(markdown) {
   const html = [];
   let paragraph = [];
   let list = null;
+  let table = null;
   let inCode = false;
   let codeLanguage = "";
   let codeLines = [];
@@ -80,6 +81,31 @@ function markdownToHtml(markdown) {
     if (!list) return;
     html.push(`<${list.type}>${list.items.map((item) => `<li>${inlineMarkdown(item)}</li>`).join("")}</${list.type}>`);
     list = null;
+  };
+
+  const tableCells = (line) =>
+    line
+      .trim()
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map((cell) => cell.trim());
+
+  const isTableSeparator = (line) =>
+    tableCells(line).every((cell) => /^:?-{3,}:?$/.test(cell));
+
+  const flushTable = () => {
+    if (!table) return;
+    if (table.active) {
+      const header = table.headers.map((cell) => `<th>${inlineMarkdown(cell)}</th>`).join("");
+      const rows = table.rows
+        .map((row) => `<tr>${row.map((cell) => `<td>${inlineMarkdown(cell)}</td>`).join("")}</tr>`)
+        .join("");
+      html.push(`<div class="article-table-wrap"><table><thead><tr>${header}</tr></thead><tbody>${rows}</tbody></table></div>`);
+    } else {
+      paragraph.push(table.original);
+    }
+    table = null;
   };
 
   for (const line of lines) {
@@ -107,12 +133,33 @@ function markdownToHtml(markdown) {
     if (!line.trim()) {
       flushParagraph();
       flushList();
+      flushTable();
       continue;
+    }
+
+    if (/^\|.+\|$/.test(line.trim())) {
+      flushParagraph();
+      flushList();
+      if (!table) {
+        table = { headers: tableCells(line), rows: [], active: false, original: line.trim() };
+        continue;
+      }
+      if (!table.active && isTableSeparator(line)) {
+        table.active = true;
+        continue;
+      }
+      if (table.active) {
+        table.rows.push(tableCells(line));
+        continue;
+      }
+    } else {
+      flushTable();
     }
 
     if (/^-{3,}$/.test(line.trim())) {
       flushParagraph();
       flushList();
+      flushTable();
       html.push("<hr>");
       continue;
     }
@@ -121,6 +168,7 @@ function markdownToHtml(markdown) {
     if (image) {
       flushParagraph();
       flushList();
+      flushTable();
       html.push(imageBlock(image[1], image[2]));
       continue;
     }
@@ -129,6 +177,7 @@ function markdownToHtml(markdown) {
     if (heading) {
       flushParagraph();
       flushList();
+      flushTable();
       const level = heading[1].length;
       html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
       continue;
@@ -164,6 +213,7 @@ function markdownToHtml(markdown) {
   }
   flushParagraph();
   flushList();
+  flushTable();
   return html.join("\n");
 }
 
