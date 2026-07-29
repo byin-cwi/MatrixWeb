@@ -1,6 +1,5 @@
 const themeToggle = document.querySelector(".theme-toggle");
 const storedTheme = window.localStorage.getItem("theme");
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 function setTheme(theme) {
   const isDark = theme === "dark";
@@ -8,7 +7,7 @@ function setTheme(theme) {
   themeToggle?.setAttribute("aria-pressed", String(isDark));
 }
 
-setTheme(storedTheme || (prefersDark ? "dark" : "light"));
+setTheme(storedTheme === "dark" ? "dark" : "light");
 
 themeToggle?.addEventListener("click", () => {
   const nextTheme = document.body.classList.contains("theme-dark") ? "light" : "dark";

@@ -7,7 +7,7 @@ The site uses a compact academic layout: a profile sidebar on the homepage, rese
 Live site:
 
 ```text
-https://byin-cwi.github.io/MatrixWeb/
+https://bojianyin.github.io/
 ```
 
 ## Structure

@@ -4,7 +4,7 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const contentDir = path.join(root, "content", "posts");
 const postsDir = path.join(root, "posts");
-const siteUrl = "https://byin-cwi.github.io/MatrixWeb";
+const siteUrl = "https://bojianyin.github.io";
 
 function escapeHtml(value) {
   return String(value)
@@ -296,7 +296,10 @@ function siteHeader(prefix = "") {
           <a href="${prefix}index.html#ideas">想法</a>
           <a href="${prefix}index.html#miscs">Miscs</a>
           <a href="${prefix}index.html#cv">CV</a>
-          <button class="theme-toggle" type="button" aria-label="Theme settings">⚙</button>
+          <button class="theme-toggle" type="button" aria-label="切换主题">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.2 14.4A8.2 8.2 0 0 1 9.6 3.8a8.2 8.2 0 1 0 10.6 10.6Z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"></path></svg>
+          </button>
         </nav>
       </div>
     </header>`;
@@ -329,7 +332,7 @@ function blogEntry(post, prefix = "") {
                   <div class="post-number" aria-label="${escapeHtml(sectionLabel(post.section))} number ${post.sectionNumber}">${escapeHtml(sectionLabel(post.section))} ${formatPostNumber(post.sectionNumber)}</div>
                   <h3 class="blog-title"><a href="${prefix}posts/${post.slug}.html">${escapeHtml(post.title)}</a></h3>
                 </div>
-                <p class="published"><span class="calendar-icon" aria-hidden="true">▣</span><strong>Published:</strong> <time datetime="${post.date}">${formatPublishedDate(post.date)}</time></p>
+                <p class="published"><strong>Published:</strong> <time datetime="${post.date}">${formatPublishedDate(post.date)}</time></p>
                 <p class="blog-summary">${escapeHtml(post.summary)}</p>
               </article>`;
 }
@@ -422,24 +425,24 @@ ${sidebar()}
           <h2 id="publications-title">Publications</h2>
           <ol class="publication-list">
             <li>
-              <strong>Accurate online training of dynamical spiking neural networks through Forward Propagation Through Time.</strong>
-              B. Yin, F. Corradi, S. M. Bohte. <em>Nature Machine Intelligence</em>, 2023.
+              <span class="pub-title">Accurate online training of dynamical spiking neural networks through Forward Propagation Through Time.</span>
+              <span class="pub-meta"><strong>B. Yin</strong>, F. Corradi, S. M. Bohte. <em>Nature Machine Intelligence</em>, 2023.</span>
             </li>
             <li>
-              <strong>Accurate and efficient time-domain classification with adaptive spiking recurrent neural networks.</strong>
-              B. Yin, F. Corradi, S. M. Bohte. <em>Nature Machine Intelligence</em>, 2021.
+              <span class="pub-title">Accurate and efficient time-domain classification with adaptive spiking recurrent neural networks.</span>
+              <span class="pub-meta"><strong>B. Yin</strong>, F. Corradi, S. M. Bohte. <em>Nature Machine Intelligence</em>, 2021.</span>
             </li>
             <li>
-              <strong>Efficient Sparse Selective-Update RNNs for Long-Range Sequence Modeling.</strong>
-              B. Yin, F. Corradi. <em>arXiv preprint, under review</em>, 2026.
+              <span class="pub-title">Efficient Sparse Selective-Update RNNs for Long-Range Sequence Modeling.</span>
+              <span class="pub-meta"><strong>B. Yin</strong>, F. Corradi. <em>arXiv preprint, under review</em>, 2026.</span>
             </li>
             <li>
-              <strong>Stochastic Variational Propagation: Local, Scalable and Efficient Alternative to Backpropagation.</strong>
-              B. Yin, F. Corradi. <em>arXiv preprint, under review</em>, 2025.
+              <span class="pub-title">Stochastic Variational Propagation: Local, Scalable and Efficient Alternative to Backpropagation.</span>
+              <span class="pub-meta"><strong>B. Yin</strong>, F. Corradi. <em>arXiv preprint, under review</em>, 2025.</span>
             </li>
             <li>
-              <strong>Using the structure of genome data in the design of deep neural networks for predicting amyotrophic lateral sclerosis from genotype.</strong>
-              B. Yin, M. Balvert, R. A. van der Spek, B. E. Dutilh, S. M. Bohte, J. Veldink, A. Schonhuth. <em>Bioinformatics</em>, 2019.
+              <span class="pub-title">Using the structure of genome data in the design of deep neural networks for predicting amyotrophic lateral sclerosis from genotype.</span>
+              <span class="pub-meta"><strong>B. Yin</strong>, M. Balvert, R. A. van der Spek, B. E. Dutilh, S. M. Bohte, J. Veldink, A. Schonhuth. <em>Bioinformatics</em>, 2019.</span>
             </li>
           </ol>
         </section>
@@ -479,8 +482,8 @@ ${blogGroups(ideaPosts, "", "ideas")}
   return documentShell({
     title: "Bojian Yin | About Me",
     description: "Bojian Yin 的学术个人主页、研究笔记和博客归档。",
-    cssPath: "assets/styles.css?v=citation-blocks",
-    scriptPath: "assets/main.js?v=academic-ui",
+    cssPath: "assets/styles.css?v=academic-polish",
+    scriptPath: "assets/main.js?v=academic-polish",
     body,
   });
 }
@@ -498,7 +501,7 @@ function buildPost(post) {
 ${markdownToHtml(post.markdown)}
         </div>
 ${citationBlock(post)}
-        <p class="article-back"><a href="../index.html#${returnHash}">${returnLabel}</a></p>
+        <p class="article-back"><a href="../index.html#${returnHash}">← ${returnLabel}</a></p>
       </article>
     </main>
 
@@ -512,8 +515,8 @@ ${citationBlock(post)}
   return documentShell({
     title: `${post.title} | Bojian Yin`,
     description: post.summary,
-    cssPath: "../assets/styles.css?v=citation-blocks",
-    scriptPath: "../assets/main.js?v=academic-ui",
+    cssPath: "../assets/styles.css?v=academic-polish",
+    scriptPath: "../assets/main.js?v=academic-polish",
     body,
   });
 }
