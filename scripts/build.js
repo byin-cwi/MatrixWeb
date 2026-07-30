@@ -397,10 +397,10 @@ ${sidebar()}
             At its core, I believe the problem of AI is a problem of learning. Intelligence is not a fixed artifact
             produced by one enormous training run; it is the capacity to keep acquiring, revising, and reusing
             knowledge. Yet today's models still learn slowly, forget what they have seen, and demand enormous
-            resources. I search for the mathematical principles that could let machines learn the way brains do,
+            resources. <strong>I search for the mathematical principles</strong> that could let machines learn the way brains do,
             continually, efficiently, and robustly, and I turn those principles into practical algorithms and
             systems. This pursuit has led to two first-author papers in <em>Nature Machine Intelligence</em>. But this
-            is only a beginning, and the research continues.
+            is only a beginning, <strong>and the research continues</strong>.
           </p>
         </section>
 
