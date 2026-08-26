@@ -10,6 +10,8 @@ section: blog
 
 # Why language models will need local learning, and what it will take to get there
 
+![LLM training efficiency: global vs. local learning](../assets/local-learning-efficiency.png)
+
 Every large language model in production today is trained with backpropagation, and the systems built around it are showing strain in several places at once: activation memory that grows with depth and context, pipelines that idle unless fed ever-larger batches, fine-tuning that erodes capabilities the model already had, looped architectures trained only on their last few iterations, and deployed models that cannot learn at all.
 
 In this post we make two arguments. First, these are five consequences of one design decision: every parameter waits on a single error signal computed at the output. Local learning, in which each block of layers updates from a signal it can compute itself, is the only family of methods that removes that dependency. Second, the evidence available in 2026 does not yet support replacing backpropagation with any existing local rule, and we describe what evidence would.
