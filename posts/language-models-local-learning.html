@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why language models will need local learning, and what it will take to get there | Bojian Yin</title>
+    <meta name="description" content="A look at why global backpropagation is becoming a systems bottleneck for language models, and what evidence local learning would need before it can replace it.">
+    <link rel="stylesheet" href="../assets/styles.css?v=academic-polish">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-grid">
+        <a class="brand" href="../index.html" aria-label="回到首页">Bojian Yin</a>
+        <nav class="nav" aria-label="主导航">
+          <a href="../index.html#publications">Publications</a>
+          <a href="../index.html#blogs">Blog</a>
+          <a href="../index.html#ideas">想法</a>
+          <a href="../index.html#miscs">Miscs</a>
+          <a href="../index.html#cv">CV</a>
+          <button class="theme-toggle" type="button" aria-label="切换主题">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.2 14.4A8.2 8.2 0 0 1 9.6 3.8a8.2 8.2 0 1 0 10.6 10.6Z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"></path></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top" class="wrap layout article-layout">
+      <article class="article section">
+        <div class="post-number post-number-page">Blog 04</div>
+        <p class="article-date">2026-08-26</p>
+        <div class="article-content">
+<h1>Why language models will need local learning, and what it will take to get there</h1>
+<p>Every large language model in production today is trained with backpropagation, and the systems built around it are showing strain in several places at once: activation memory that grows with depth and context, pipelines that idle unless fed ever-larger batches, fine-tuning that erodes capabilities the model already had, looped architectures trained only on their last few iterations, and deployed models that cannot learn at all.</p>
+<p>In this post we make two arguments. First, these are five consequences of one design decision: every parameter waits on a single error signal computed at the output. Local learning, in which each block of layers updates from a signal it can compute itself, is the only family of methods that removes that dependency. Second, the evidence available in 2026 does not yet support replacing backpropagation with any existing local rule, and we describe what evidence would.</p>
+<h2>The hidden cost of a single global gradient</h2>
+<p>Backpropagation is sequential. A layer cannot update until the forward pass has reached the output and the gradient has returned through every layer above it. Depth becomes a serial chain, every intermediate activation is stored until its gradient arrives, and any signal entering at the output reaches every parameter, whether or not it should change.</p>
+<p>Training systems manage these costs by trading resources. Activation checkpointing recomputes the forward pass to save memory, at roughly 30% more compute. Pipeline schedules keep accelerators busy by adding microbatches, which enlarges the global batch, or by adding memory in zero-bubble variants. Zeroth-order optimizers remove the backward pass and pay with 10–100 times more steps. None of these removes the dependency; each moves its cost to the least constrained budget.</p>
+<h2>Where the constraint is starting to bind</h2>
+<p><strong>Depth and batch size.</strong> Activation memory scales with depth, sequence length, and width. Across <em>p</em> pipeline stages, roughly (<em>p</em>−1)/(<em>m</em>+<em>p</em>−1) of the hardware is idle unless the number of microbatches <em>m</em> is much larger than <em>p</em>. Meeting that condition pushes the global batch past the critical batch size, beyond which additional samples no longer reduce training steps. Depth ends up limited by memory, batch size, or both.</p>
+<p><strong>Looped architectures.</strong> Models such as Huginn and Ouro reuse one block for <em>r</em> iterations to reason in latent space. Backpropagating through <em>r</em> iterations multiplies <em>r</em> Jacobians and grows memory with <em>r</em>, so training is usually truncated. An iso-depth scaling study from April 2026 found that truncation leaves the loop mechanism poorly trained even while validation loss keeps improving.</p>
+<p><strong>Diffusion blocks.</strong> Block diffusion language models (BD3-LM, SDAR, SDLM, and this year's multi-block variants) generate autoregressively over blocks and denoise within each one. Their objective is already local in the iteration dimension, since each denoising step is trained on its own rather than through the refinement chain, which is what looped transformers lack. The price is an objective that cannot be evaluated in one standard forward pass and slower convergence when denoising is coupled across a sequence. Along depth, these models remain fully backpropagated.</p>
+<p><strong>Learning on devices.</strong> Fine-tuning needs gradients, optimizer state, and stored activations beyond the weights, which limits on-device training to a few billion parameters. Zeroth-order methods fit a 30B model on one 80 GB A100 where backpropagation fits 2.7B, at 10–100 times the steps. Deployed models stay frozen.</p>
+<p><strong>Post-training.</strong> Full-parameter SFT and RL push narrow gradients through every layer. In LoPT (May 2026), fine-tuning Llama-3.1-8B-Instruct on Alpaca reduced GSM8K from 69.7 to 46.6, while stopping the task gradient at the network's midpoint gave 72.1 with 24–36% less peak memory.</p>
+<p><strong>New hardware.</strong> Analog and photonic substrates run forward passes efficiently but cannot easily implement backpropagation. Wave-based physical networks have been trained without it (<em>Science</em>, 2023); a usable local rule is a precondition for training on such hardware.</p>
+<h2>What local learning achieves today</h2>
+<p>Not enough. A June 2026 audit compared the strongest Forward-Forward variant with a matched backpropagation baseline and found deficits of 2.4 and 5.9 points on CIFAR-10 and CIFAR-100, widening with the number of classes, and 49.4% on ImageNet-100 where backpropagation exceeds 75%. On an 8 GB GPU, backpropagation with gradient accumulation used less memory and ran faster. Since next-token prediction is classification over roughly 10⁵ classes, a gap that widens with class count is a warning sign for language.</p>
+<p>Results on language models this year point the same way. Split Forward Gradient (July) reports that forward-gradient training of a transformer trunk on WikiText-103 did worse than leaving a random trunk frozen. Forward Pass Domain Adaptation (August) adapts 7–8B models without cross-layer backpropagation at 40% less memory, but only in late layers, where the output error approximates the gradient at cosine similarity 0.47–0.59, and full fine-tuning still reaches lower in-domain perplexity. Even LoPT uses a single boundary in post-training only, and a local next-token objective on its lower half severely degraded performance.</p>
+<p>We read these as one failure: a strictly local objective does not encode the task the model is evaluated on. The methods that succeed either keep backpropagation running within large blocks or reintroduce a global signal by another route. Local architectures are well understood; local objectives that carry enough information are not.</p>
+<h2>What it would take</h2>
+<p>A local rule that matches backpropagation on next-token loss from 125M to 1B parameters at Chinchilla-optimal budgets, with a gap that does not widen with scale; that holds at 7–8B parameters on a trillion tokens with downstream benchmarks within noise; and that beats checkpointed backpropagation with gradient accumulation on wall-clock time and energy, since peak memory has already proven to be the wrong metric.</p>
+<p>Training systems are running out of budgets in which to hide the cost of the global gradient. Whether language models will need local learning has, in our view, been settled by the constraints above. Whether a local rule can be found that carries enough information to be worth using is the open question, and the experiments that would answer it are within reach of a single lab.</p>
+<hr>
+<p><strong>References.</strong> LoPT (arXiv:2605.04913); Forward-Forward audit (arXiv:2606.06539); Split Forward Gradient (arXiv:2607.16612); Forward Pass Domain Adaptation (arXiv:2608.14563); MeZO (arXiv:2305.17333); iso-depth scaling for looped LMs (arXiv:2604.21106); BD3-LM (arXiv:2503.09573); SDLM (arXiv:2509.24007); Multi-Block Diffusion LMs (arXiv:2606.29215); Interlocking Backpropagation (arXiv:2010.04116); critical batch size (arXiv:1812.06162); Momeni et al., <em>Science</em>, 2023.</p>
+        </div>
+        <section class="citation-box" aria-labelledby="citation-title-language-models-local-learning">
+          <h2 id="citation-title-language-models-local-learning">Citation</h2>
+          <p>If you need to cite this post, please use:</p>
+          <p class="citation-text">Bojian Yin. (Aug. 26, 2026). Why language models will need local learning, and what it will take to get there [Blog post]. Retrieved from <a href="https://bojianyin.github.io/posts/language-models-local-learning.html">https://bojianyin.github.io/posts/language-models-local-learning.html</a></p>
+          <pre class="citation-bibtex"><code>@online{matrixweb-language-models-local-learning,
+        title={Why language models will need local learning, and what it will take to get there},
+        author={Bojian Yin},
+        year={2026},
+        month={Aug},
+        url={\url{https://bojianyin.github.io/posts/language-models-local-learning.html}},
+}</code></pre>
+        </section>
+        <p class="article-back"><a href="../index.html#blogs">← 返回 Blog</a></p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© 2026 Bojian Yin. Built with Markdown, HTML, CSS and Git.</p>
+      </div>
+    </footer>
+
+    <script src="../assets/main.js?v=academic-polish"></script>
+  </body>
+</html>
