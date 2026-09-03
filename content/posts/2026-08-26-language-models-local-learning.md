@@ -46,7 +46,7 @@ We read these as one failure: a strictly local objective does not encode the tas
 
 ## What it would take
 
-A local rule that matches backpropagation on next-token loss from 125M to 1B parameters at compute-optimal token budgets [22], with a gap that does not widen with scale; that holds at 7–8B parameters on a trillion tokens with downstream benchmarks within noise; and that beats checkpointed backpropagation with gradient accumulation on wall-clock time and energy, since peak memory has already proven to be the wrong metric [18].
+A local rule that matches backpropagation on next-token loss from 125M to 1B parameters at **compute-optimal token budgets [22]**. It should show a gap that does not widen with scale; hold at 7–8B parameters on a trillion tokens with downstream benchmarks within noise; and beat checkpointed backpropagation with gradient accumulation on wall-clock time and energy, since peak memory has already proven to be the wrong metric [18].
 
 Training systems are running out of budgets in which to hide the cost of the global gradient. Whether language models will need local learning has, in our view, been settled by the constraints above. Whether a local rule can be found that carries enough information to be worth using is the open question, and the experiments that would answer it are within reach of a single lab.
 
