@@ -247,7 +247,7 @@ function formatPostNumber(number) {
 }
 
 function citationKey(post) {
-  return `matrixweb-${post.slug}`.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+  return (post.citationKey || `matrixweb-${post.slug}`).replace(/[^a-z0-9-]/gi, "-").toLowerCase();
 }
 
 function citationBlock(post) {
